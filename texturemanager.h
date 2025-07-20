@@ -1,0 +1,36 @@
+//
+// Created by rodrigo on 20/07/25.
+//
+
+#ifndef TEXTUREMANAGER_H
+#define TEXTUREMANAGER_H
+#include <map>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include <string>
+#include <map>
+
+typedef std::map<std::string, SDL_Texture*> Map_of_Textures;
+
+class texturemanager {
+
+    Map_of_Textures mTextureMap;
+public:
+    texturemanager() {};
+    ~texturemanager() {};
+
+    void GetTextureDimensions(std::string id, SDL_FRect &dimensions);
+
+    bool load(std::string filename, std::string id, SDL_Renderer* pRenderer);
+
+    void draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer,
+        SDL_FlipMode flip = SDL_FLIP_NONE);
+
+    void drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame,
+        SDL_Renderer* pRenderer, SDL_FlipMode flip = SDL_FLIP_NONE);
+
+};
+
+
+
+#endif //TEXTUREMANAGER_H
