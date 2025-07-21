@@ -12,12 +12,23 @@
 
 typedef std::map<std::string, SDL_Texture*> Map_of_Textures;
 
-class texturemanager {
+
+//singleton
+class TextureManager {
 
     Map_of_Textures mTextureMap;
+    TextureManager() {};
 public:
-    texturemanager() {};
-    ~texturemanager() {};
+    static TextureManager* s_pInstance;
+    ~TextureManager() {};
+    static TextureManager* getInstance() {
+
+        if (s_pInstance == nullptr) {
+            s_pInstance = new TextureManager();
+            return s_pInstance;
+        }
+        return s_pInstance;
+    }
 
     void GetTextureDimensions(std::string id, SDL_FRect &dimensions);
 
@@ -30,6 +41,9 @@ public:
         SDL_Renderer* pRenderer, SDL_FlipMode flip = SDL_FLIP_NONE);
 
 };
+
+typedef TextureManager TheTextureManager;
+
 
 
 

@@ -4,7 +4,7 @@
 #include "texturemanager.h"
 
 Game *game = nullptr;
-int main() {
+int main(int argc, char *argv[]) {
 
     game = new Game();
     if (game->init("SDL3 Game", 1600, 900, SDL_WINDOW_RESIZABLE)) {
@@ -12,7 +12,7 @@ int main() {
             game->handeEvents();
             game->update();
             game->render();
-            SDL_Delay(16); // Approx 60 FPS
+            SDL_Delay(100); // Approx 60 FPS
         }
     } else {
         SDL_Log("Game initialization failed.");

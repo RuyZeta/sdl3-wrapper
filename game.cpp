@@ -36,15 +36,15 @@ bool Game::init(const char* name, int width, int height, int flags) {
     }
     bRunning = true;
     // Load the texture
-    if (!tmTextureManager.load("../assets/explosion.png", "txtExplosion", pRenderer)) {
+    if (!TheTextureManager::getInstance()->load("../assets/child.png", "txtExplosion", pRenderer)) {
         SDL_Log("Failed to load texture");
         return false;
     }
-    tmTextureManager.GetTextureDimensions("txtExplosion", sourceRect);
+    TheTextureManager::getInstance()->GetTextureDimensions("txtExplosion", sourceRect);
     ancho = sourceRect.w;
     alto = sourceRect.h;
-    sourceRect.w /= 8; // Assuming the sprite sheet has 8 frames in the x direction
-    sourceRect.h /= 4; // Assuming the sprite sheet has 4 frames in the y direction
+    sourceRect.w /= 7; //
+    sourceRect.h /= 3; //
 
     return true;
 }
@@ -53,7 +53,7 @@ void Game::render() {
     SDL_RenderClear(pRenderer);
     // el origen es la textura y sourceRect. El destino es el Renderer (la ventana) y destRect.
     //tmTextureManager.draw("txtExplosion", 0, 0, sourceRect.w, sourceRect.h, pRenderer);
-    tmTextureManager.drawFrame("txtExplosion", 0, 0, sourceRect.w, sourceRect.h,
+    TheTextureManager::getInstance()->drawFrame("txtExplosion", 0, 0, sourceRect.w, sourceRect.h,
     m_currentRow, m_currentFrame, pRenderer);
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
@@ -61,8 +61,8 @@ void Game::render() {
 void Game::update() {
     //if (!(sourceRect.x = (int)(sourceRect.x + ancho) % (int)(ancho * 8))) // 8 frames in the x direction
      //   sourceRect.y = (int)(sourceRect.y + alto) % (int)(alto * 4); // 4 frames in the y direction
-    if (!(m_currentFrame = (m_currentFrame + 1) % 8)) // Assuming 8 frames in the sprite sheet
-        m_currentRow = (m_currentRow + 1) % 8;
+    if (!(m_currentFrame = (m_currentFrame +1) % 7))
+        m_currentRow = (m_currentRow +1) % 3;
 
 }
 

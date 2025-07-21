@@ -24,7 +24,7 @@ class Game {
 
     int m_currentFrame;
     int m_currentRow;
-    texturemanager tmTextureManager;
+
 
 public:
     Game();
