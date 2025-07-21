@@ -14,7 +14,6 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.y = 0;
     destRect.w = 0;
     destRect.h = 0;
-
 }
 
 bool Game::init(const char* name, int width, int height, int flags) {
@@ -45,7 +44,6 @@ bool Game::init(const char* name, int width, int height, int flags) {
     alto = sourceRect.h;
     sourceRect.w /= 7; //
     sourceRect.h /= 3; //
-
     return true;
 }
 
@@ -53,7 +51,7 @@ void Game::render() {
     SDL_RenderClear(pRenderer);
     // el origen es la textura y sourceRect. El destino es el Renderer (la ventana) y destRect.
     //tmTextureManager.draw("txtExplosion", 0, 0, sourceRect.w, sourceRect.h, pRenderer);
-    TheTextureManager::getInstance()->drawFrame("txtExplosion", 0, 0, sourceRect.w, sourceRect.h,
+    TheTextureManager::getInstance()->drawFrame("txtExplosion", 0  , 0, sourceRect.w, sourceRect.h,
     m_currentRow, m_currentFrame, pRenderer);
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
@@ -61,9 +59,9 @@ void Game::render() {
 void Game::update() {
     //if (!(sourceRect.x = (int)(sourceRect.x + ancho) % (int)(ancho * 8))) // 8 frames in the x direction
      //   sourceRect.y = (int)(sourceRect.y + alto) % (int)(alto * 4); // 4 frames in the y direction
-    if (!(m_currentFrame = (m_currentFrame +1) % 7))
-        m_currentRow = (m_currentRow +1) % 3;
-
+    m_currentFrame = ((m_currentFrame+1) % 6);
+    if (!m_currentFrame)
+        m_currentRow = ((m_currentRow+1) % 3);
 }
 
 void Game::handeEvents() {

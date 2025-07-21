@@ -58,7 +58,7 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
     SDL_FRect sourceRect;
     SDL_FRect destRect;
     sourceRect.x = currentFrame * width;
-    sourceRect.y = (currentRow ) * height; //currentRow starts at 1 not at 0. this could be changed
+    sourceRect.y = currentRow * height; //currentRow starts at 1 not at 0. this could be changed
     sourceRect.w = destRect.w = width;
     sourceRect.h = destRect.h = height;
     destRect.x = x;
@@ -67,4 +67,5 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
         0.0f, nullptr, flip);
 
 }
+
 TextureManager* TextureManager::s_pInstance = 0;
