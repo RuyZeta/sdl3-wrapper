@@ -38,7 +38,7 @@ bool Game::init(const char* name, int width, int height, int flags) {
     }
     bRunning = true;
     // Load the texture
-    if (!TheTextureManager::getInstance()->load("../assets/gato2x4.png", "txtExplosion", pRenderer)) {
+    if (!TheTextureManager::getInstance()->load("../assets/explosion.png", "txtExplosion", pRenderer)) {
         SDL_Log("Failed to load texture");
         return false;
     }
@@ -98,3 +98,5 @@ void Game::clean() {
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
 }
+
+Game* Game::s_pInstance = nullptr;

@@ -10,7 +10,8 @@
 #include "gameobject.h"
 #include <vector>
 
-
+// this is the game class that will handle the game loop, events, rendering, etc.
+// hecho como singleton
 
 class Game {
     SDL_Window *pWindow;
@@ -23,30 +24,38 @@ class Game {
     SDL_FRect destRect;
 
     float ancho, alto;
-
     int m_currentFrame;
     int m_currentRow;
 
-    GameObject* m_go;
     Actor* m_actor; // actor que se va a mover
     Enemy* m_enemy;
 
     // todos los actores del juego
     std::vector<GameObject *> m_players;
 
-
-public:
     Game();
+public:
+
     ~Game() {};
+
+    static Game* s_pInstance;
+    static Game* getInstance() {
+        if (s_pInstance ==nullptr) {
+            s_pInstance = new Game();
+            return s_pInstance;
+        }
+        return s_pInstance;
+    }
+    SDL_Renderer* getRenderer() const { return pRenderer; }
     bool init(const char *name, int width, int height, int flags);
     void render();
     void update();
     void handeEvents();
     void clean();
     bool isRunning() {return bRunning;};
-
 };
 
+typedef Game TheGame;
 
 
 #endif //GAME_H

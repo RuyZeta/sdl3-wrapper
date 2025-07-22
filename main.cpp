@@ -7,18 +7,19 @@
 Game *game = nullptr;
 int main(int argc, char *argv[]) {
 
-    game = new Game();
-
-    if (game->init("SDL3 Game", 1600, 900, SDL_WINDOW_RESIZABLE)) {
-        while (game->isRunning()) {
-            game->handeEvents();
-            game->update();
-            game->render();
+    // Initialize SDL
+    if (TheGame::getInstance()->init("SDL3 Game", 1600, 900, SDL_WINDOW_RESIZABLE)) {
+        while (TheGame::getInstance()->isRunning()) {
+            TheGame::getInstance()->handeEvents();
+            TheGame::getInstance()->update();
+            TheGame::getInstance()->render();
             SDL_Delay(20); // Approx 60 FPS
         }
     } else {
         SDL_Log("Game initialization failed.");
     }
+
+    TheGame::getInstance()->clean();
 
     return 0;
 }
