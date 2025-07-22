@@ -4,6 +4,7 @@
 
 #include "game.h"
 
+
 Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
   m_currentFrame(0), m_currentRow(0) {
     sourceRect.x = 0;
@@ -15,8 +16,7 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.w = 0;
     destRect.h = 0;
 
-    m_actor = new Actor();
-    m_enemy = new Enemy();
+
 }
 
 bool Game::init(const char* name, int width, int height, int flags) {
@@ -49,12 +49,10 @@ bool Game::init(const char* name, int width, int height, int flags) {
     sourceRect.h /= 4; //
 
 
-    m_actor->load(300, 300, sourceRect.w, sourceRect.h, "txtExplosion");
-    m_enemy->load(0, 0, sourceRect.w, sourceRect.h, "txtExplosion");
 
 
-    m_players.push_back(m_actor);
-    m_players.push_back(m_enemy);
+    m_players.push_back(new Actor(new LoaderParams(100, 100, sourceRect.w, sourceRect.h, "txtExplosion")));
+    m_players.push_back(new Enemy(new LoaderParams(300, 300, sourceRect.w, sourceRect.h, "txtExplosion")));
     return true;
 }
 
@@ -64,8 +62,8 @@ void Game::render() {
     // TheTextureManager::getInstance()->drawFrame("txtExplosion", 0  , 0, sourceRect.w, sourceRect.h,
     //m_currentRow, m_currentFrame, pRenderer);
 
-    for (std::vector<GameObject *>::size_type i = 0; i < m_players.size(); ++i) {
-        m_players[i]->draw(pRenderer);
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+        m_players[i]->draw();
     }
 
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
@@ -75,7 +73,7 @@ void Game::update() {
     /* m_currentFrame = ((m_currentFrame+1) % 8);
     if (!m_currentFrame)
         m_currentRow = ((m_currentRow+1) % 4);*/
-    for (std::vector<GameObject *>::size_type i = 0; i < m_players.size(); ++i) {
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->update();
     }
 }

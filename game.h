@@ -31,7 +31,7 @@ class Game {
     Enemy* m_enemy;
 
     // todos los actores del juego
-    std::vector<GameObject *> m_players;
+    std::vector<ObjetoAbstractoBase *> m_players;
 
     Game();
 public:
