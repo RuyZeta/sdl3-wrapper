@@ -14,6 +14,7 @@ typedef std::map<std::string, SDL_Texture*> Map_of_Textures;
 
 
 //singleton
+// como el nombre lo dice maneja las texturas, las carga y las dibuja y entrega algunas dimensiones
 class TextureManager {
 
     Map_of_Textures mTextureMap;

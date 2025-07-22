@@ -8,6 +8,7 @@
 #include <SDL3_image/SDL_image.h>
 #include "texturemanager.h"
 #include "gameobject.h"
+#include <vector>
 
 
 
@@ -26,9 +27,12 @@ class Game {
     int m_currentFrame;
     int m_currentRow;
 
-    GameObject m_go;
-    Actor m_player; // actor que se va a mover
+    GameObject* m_go;
+    Actor* m_actor; // actor que se va a mover
+    Enemy* m_enemy;
 
+    // todos los actores del juego
+    std::vector<GameObject *> m_players;
 
 
 public:

@@ -47,5 +47,26 @@ void Actor::update() {
     m_x -= 1;
 }
 
+////////////////////////
+/// Enemy class
+///
+
+void Enemy::load(int x, int y, int ancho, int alto, std::string textureID) {
+
+    GameObject::load(x, y, ancho, alto, textureID);
+
+}
+
+void Enemy::draw(SDL_Renderer *pRenderer) {
+
+    GameObject::draw(pRenderer);
+}
+
+void Enemy::update() {
+    m_y += 1;
+    m_x += 1;
+    m_currentFrame = int ((SDL_GetTicks() / 100) % 6);
+}
+
 
 //actor

@@ -15,11 +15,10 @@ public:
     GameObject() {}
     virtual ~GameObject() {}
 
-    void load(int x, int y, int ancho, int alto, std::string textureID);
-    void draw(SDL_Renderer* pRenderer);
-
+    virtual void load(int x, int y, int ancho, int alto, std::string textureID);
+    virtual void draw(SDL_Renderer* pRenderer);
     virtual void update();
-    void clean() {SDL_Log("GameObject::clean");}
+    virtual void clean() {SDL_Log("GameObject::clean");}
 
 protected:
     std::string m_sTextureID;
@@ -42,6 +41,16 @@ public:
     void update();
     void clean() { GameObject::clean(); SDL_Log("Player::clean"); }
 
+};
+
+class Enemy : public GameObject {
+public:
+    Enemy(){}
+    ~Enemy() {}
+    void load(int x, int y, int ancho, int alto, std::string textureID);
+    void draw(SDL_Renderer *pRenderer);
+    void update();
+    void clean() { GameObject::clean(); SDL_Log("Player::clean"); }
 };
 
 #endif //GAMEOBJECT_H

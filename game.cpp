@@ -14,6 +14,9 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.y = 0;
     destRect.w = 0;
     destRect.h = 0;
+
+    m_actor = new Actor();
+    m_enemy = new Enemy();
 }
 
 bool Game::init(const char* name, int width, int height, int flags) {
@@ -35,7 +38,7 @@ bool Game::init(const char* name, int width, int height, int flags) {
     }
     bRunning = true;
     // Load the texture
-    if (!TheTextureManager::getInstance()->load("../assets/explosion.png", "txtExplosion", pRenderer)) {
+    if (!TheTextureManager::getInstance()->load("../assets/gato2x4.png", "txtExplosion", pRenderer)) {
         SDL_Log("Failed to load texture");
         return false;
     }
@@ -45,9 +48,13 @@ bool Game::init(const char* name, int width, int height, int flags) {
     sourceRect.w /= 8; //
     sourceRect.h /= 4; //
 
-    m_go.load(100, 100, sourceRect.w, sourceRect.h, "txtExplosion");
-    m_player.load(300, 300, sourceRect.w, sourceRect.h, "txtExplosion");
 
+    m_actor->load(300, 300, sourceRect.w, sourceRect.h, "txtExplosion");
+    m_enemy->load(0, 0, sourceRect.w, sourceRect.h, "txtExplosion");
+
+
+    m_players.push_back(m_actor);
+    m_players.push_back(m_enemy);
     return true;
 }
 
@@ -57,20 +64,20 @@ void Game::render() {
     // TheTextureManager::getInstance()->drawFrame("txtExplosion", 0  , 0, sourceRect.w, sourceRect.h,
     //m_currentRow, m_currentFrame, pRenderer);
 
-    m_go.draw(pRenderer);
-    m_player.draw(pRenderer);
+    for (std::vector<GameObject *>::size_type i = 0; i < m_players.size(); ++i) {
+        m_players[i]->draw(pRenderer);
+    }
 
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
 
 void Game::update() {
-    //if (!(sourceRect.x = (int)(sourceRect.x + ancho) % (int)(ancho * 8))) // 8 frames in the x direction
-     //   sourceRect.y = (int)(sourceRect.y + alto) % (int)(alto * 4); // 4 frames in the y direction
     /* m_currentFrame = ((m_currentFrame+1) % 8);
     if (!m_currentFrame)
         m_currentRow = ((m_currentRow+1) % 4);*/
-    m_go.update();
-    m_player.update();
+    for (std::vector<GameObject *>::size_type i = 0; i < m_players.size(); ++i) {
+        m_players[i]->update();
+    }
 }
 
 void Game::handeEvents() {
