@@ -6,8 +6,9 @@
 #define GAMEOBJECT_H
 #include <SDL3/SDL.h>
 #include <string>
-#include "texturemanager.h"
-#include "game.h"
+
+
+
 
 
 // una clase ayuda para almacenar los parámetros de un objeto en el juego
@@ -60,50 +61,28 @@ protected:
 };
 
 
-
-
-class GameObject {
-
-public:
-    GameObject() {}
-    virtual ~GameObject() {}
-
-    virtual void load(int x, int y, int ancho, int alto, std::string textureID);
-    virtual void draw(SDL_Renderer* pRenderer);
-    virtual void update();
-    virtual void clean() {SDL_Log("GameObject::clean");}
-
-protected:
-    std::string m_sTextureID;
-    int m_x, m_y;
-    int m_ancho, m_alto;
-    int m_currentFrame; //ancho imagen en cuadros
-    int m_currentRow; //alto imagen en filas
-};
-
-
 // esto debería ir en un archivo separado
-class Actor : public GameObject {
+class Actor : public Objeto_en_Juego {
 
 public:
-    Actor() {}
+    Actor(const LoaderParams* pParams) : Objeto_en_Juego(pParams) {}
     virtual ~Actor() {}
 
-    void load(int x, int y, int ancho, int alto, std::string textureID);
-    void draw(SDL_Renderer *pRenderer);
+
+    void draw();
     void update();
-    void clean() { GameObject::clean(); SDL_Log("Player::clean"); }
+    void clean() { Objeto_en_Juego::clean(); SDL_Log("Player::clean"); }
 
 };
 
-class Enemy : public GameObject {
+class Enemy : public Objeto_en_Juego {
 public:
-    Enemy(){}
+    Enemy(const LoaderParams* pParams) : Objeto_en_Juego(pParams) {}
     ~Enemy() {}
-    void load(int x, int y, int ancho, int alto, std::string textureID);
-    void draw(SDL_Renderer *pRenderer);
+
+    void draw();
     void update();
-    void clean() { GameObject::clean(); SDL_Log("Player::clean"); }
+    void clean() { Objeto_en_Juego::clean(); SDL_Log("Player::clean"); }
 };
 
 #endif //GAMEOBJECT_H

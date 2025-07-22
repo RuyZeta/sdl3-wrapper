@@ -3,6 +3,9 @@
 //
 
 #include "gameobject.h"
+#include "game.h"
+#include "texturemanager.h"
+
 Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoBase(pParams) {
 
     m_x = pParams->getX();
@@ -15,7 +18,7 @@ Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoB
 }
 
 void Objeto_en_Juego::draw() {
-    TextureManager::getInstance()->drawFrame(m_textureID, m_x, m_y, m_ancho, m_alto,)
+    TextureManager::getInstance()->drawFrame(m_textureID, m_x, m_y, m_ancho, m_alto,
         m_currentRow, m_currentFrame, TheGame::getInstance()->getRenderer());
 }
 
@@ -26,45 +29,15 @@ void Objeto_en_Juego::clean() {
 }
 
 
-///////////////////////
-/// GameObject class implementation
-///
-void GameObject::load(int x, int y, int ancho, int alto, std::string textureID) {
-
-    m_x = x;
-    m_y = y;
-    m_ancho = ancho;
-    m_alto = alto;
-    m_sTextureID = textureID;
-
-    m_currentFrame = 1;
-    m_currentRow = 1;
-}
-
-void GameObject::draw(SDL_Renderer* pRenderer) {
-
-    TextureManager::getInstance()->drawFrame(m_sTextureID, m_x, m_y, m_ancho, m_alto,
-        m_currentRow, m_currentFrame, pRenderer);
-
-}
-
-void GameObject::update() {
-    // cuando actualiza x, al final de todos los frames, incrementa 1 al y
-    m_x += 1;
-}
-
 
 /////////////////////////////
 /// Actor class implementation
 ///
-void Actor::load(int x, int y, int ancho, int alto, std::string textureID) {
 
-    GameObject::load(x, y, ancho, alto, textureID);
-}
 
-void Actor::draw(SDL_Renderer *pRenderer) {
+void Actor::draw() {
 
-    GameObject::draw(pRenderer);
+    Objeto_en_Juego::draw();
 
 }
 
@@ -76,15 +49,9 @@ void Actor::update() {
 /// Enemy class
 ///
 
-void Enemy::load(int x, int y, int ancho, int alto, std::string textureID) {
+void Enemy::draw() {
 
-    GameObject::load(x, y, ancho, alto, textureID);
-
-}
-
-void Enemy::draw(SDL_Renderer *pRenderer) {
-
-    GameObject::draw(pRenderer);
+    Objeto_en_Juego::draw();
 }
 
 void Enemy::update() {
@@ -94,4 +61,3 @@ void Enemy::update() {
 }
 
 
-//actor
