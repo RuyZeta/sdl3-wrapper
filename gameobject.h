@@ -17,7 +17,8 @@ public:
 
     void load(int x, int y, int ancho, int alto, std::string textureID);
     void draw(SDL_Renderer* pRenderer);
-    void update();
+
+    virtual void update();
     void clean() {SDL_Log("GameObject::clean");}
 
 protected:
@@ -36,9 +37,9 @@ public:
     Actor() {}
     virtual ~Actor() {}
 
-
-    void draw(SDL_Renderer *pRenderer) { }
-    void update() { SDL_Log("Player::update"); m_x = 10; m_y = 20;}
+    void load(int x, int y, int ancho, int alto, std::string textureID);
+    void draw(SDL_Renderer *pRenderer);
+    void update();
     void clean() { GameObject::clean(); SDL_Log("Player::clean"); }
 
 };

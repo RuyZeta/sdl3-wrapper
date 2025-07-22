@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
             game->handeEvents();
             game->update();
             game->render();
-            SDL_Delay(100); // Approx 60 FPS
+            SDL_Delay(20); // Approx 60 FPS
         }
     } else {
         SDL_Log("Game initialization failed.");

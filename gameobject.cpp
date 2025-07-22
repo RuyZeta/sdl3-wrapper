@@ -24,7 +24,28 @@ void GameObject::draw(SDL_Renderer* pRenderer) {
 }
 
 void GameObject::update() {
-
-    m_x += m_currentFrame;
-    m_y += m_currentRow;
+    // cuando actualiza x, al final de todos los frames, incrementa 1 al y
+    m_x += 1;
 }
+
+
+/////////////////////////////
+/// Actor class implementation
+///
+void Actor::load(int x, int y, int ancho, int alto, std::string textureID) {
+
+    GameObject::load(x, y, ancho, alto, textureID);
+}
+
+void Actor::draw(SDL_Renderer *pRenderer) {
+
+    GameObject::draw(pRenderer);
+
+}
+
+void Actor::update() {
+    m_x -= 1;
+}
+
+
+//actor

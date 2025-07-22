@@ -7,6 +7,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include "texturemanager.h"
+#include "gameobject.h"
 
 
 
@@ -24,6 +25,10 @@ class Game {
 
     int m_currentFrame;
     int m_currentRow;
+
+    GameObject m_go;
+    Actor m_player; // actor que se va a mover
+
 
 
 public:

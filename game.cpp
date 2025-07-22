@@ -35,33 +35,42 @@ bool Game::init(const char* name, int width, int height, int flags) {
     }
     bRunning = true;
     // Load the texture
-    if (!TheTextureManager::getInstance()->load("../assets/child.png", "txtExplosion", pRenderer)) {
+    if (!TheTextureManager::getInstance()->load("../assets/explosion.png", "txtExplosion", pRenderer)) {
         SDL_Log("Failed to load texture");
         return false;
     }
     TheTextureManager::getInstance()->GetTextureDimensions("txtExplosion", sourceRect);
     ancho = sourceRect.w;
     alto = sourceRect.h;
-    sourceRect.w /= 7; //
-    sourceRect.h /= 3; //
+    sourceRect.w /= 8; //
+    sourceRect.h /= 4; //
+
+    m_go.load(100, 100, sourceRect.w, sourceRect.h, "txtExplosion");
+    m_player.load(300, 300, sourceRect.w, sourceRect.h, "txtExplosion");
+
     return true;
 }
 
 void Game::render() {
     SDL_RenderClear(pRenderer);
     // el origen es la textura y sourceRect. El destino es el Renderer (la ventana) y destRect.
-    //tmTextureManager.draw("txtExplosion", 0, 0, sourceRect.w, sourceRect.h, pRenderer);
-    TheTextureManager::getInstance()->drawFrame("txtExplosion", 0  , 0, sourceRect.w, sourceRect.h,
-    m_currentRow, m_currentFrame, pRenderer);
+    // TheTextureManager::getInstance()->drawFrame("txtExplosion", 0  , 0, sourceRect.w, sourceRect.h,
+    //m_currentRow, m_currentFrame, pRenderer);
+
+    m_go.draw(pRenderer);
+    m_player.draw(pRenderer);
+
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
 
 void Game::update() {
     //if (!(sourceRect.x = (int)(sourceRect.x + ancho) % (int)(ancho * 8))) // 8 frames in the x direction
      //   sourceRect.y = (int)(sourceRect.y + alto) % (int)(alto * 4); // 4 frames in the y direction
-    m_currentFrame = ((m_currentFrame+1) % 6);
+    /* m_currentFrame = ((m_currentFrame+1) % 8);
     if (!m_currentFrame)
-        m_currentRow = ((m_currentRow+1) % 3);
+        m_currentRow = ((m_currentRow+1) % 4);*/
+    m_go.update();
+    m_player.update();
 }
 
 void Game::handeEvents() {
