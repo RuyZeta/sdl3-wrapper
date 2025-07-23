@@ -32,6 +32,7 @@ public:
     }
 
     void GetTextureDimensions(std::string id, SDL_FRect &dimensions);
+    void setTextureBlend(std::string id, SDL_BlendMode mode);
 
     bool load(std::string filename, std::string id, SDL_Renderer* pRenderer);
 

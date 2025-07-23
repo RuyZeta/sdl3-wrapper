@@ -8,21 +8,21 @@
 #include <cmath>
 
 //vector en un plano cartesiano
-class Vector2d {
+class Vec2r {
 
     float m_x, m_y;
 public:
-    Vector2d(float x, float y) : m_x(x), m_y(y) {}
-    Vector2d() : m_x(0), m_y(0) {};
-    Vector2d(const Vector2d &other) { *this = other; }
-    Vector2d &operator=(const Vector2d &other) {
+    Vec2r(float x, float y) : m_x(x), m_y(y) {}
+    Vec2r() : m_x(0), m_y(0) {};
+    Vec2r(const Vec2r &other) { *this = other; }
+    Vec2r &operator=(const Vec2r &other) {
         if (this == &other)
             return *this;
         m_x = other.m_x;
         m_y = other.m_y;
         return *this;
     }
-    bool operator==(const Vector2d &other) const {
+    bool operator==(const Vec2r &other) const {
         return m_x == other.m_x && m_y == other.m_y;
     }
     float getX() const { return m_x; }
@@ -30,34 +30,34 @@ public:
     void setX(const float& x) { m_x = x; }
     void setY(const float& y) { m_y = y; }
     float largo_vector () {return sqrt(m_x * m_x + m_y * m_y);}
-    Vector2d operator+(const Vector2d& other) const {
+    Vec2r operator+(const Vec2r& other) const {
         return {m_x + other.m_x, m_y + other.m_y}; // lo mismo que retornar cartesianvector
     }
-    Vector2d operator-(const Vector2d& other) const {
+    Vec2r operator-(const Vec2r& other) const {
         return {m_x - other.m_x, m_y - other.m_y};
     }
-    Vector2d& operator+=(const Vector2d& other) {
+    Vec2r& operator+=(const Vec2r& other) {
         m_x += other.m_x;
         m_y += other.m_y;
         return *this;
     }
-    Vector2d& operator-=(const Vector2d &other) {
+    Vec2r& operator-=(const Vec2r &other) {
         m_x -= other.m_x;
         m_y -= other.m_y;
         return *this;
     }
-    Vector2d operator*(const float& scalar) const {
-        return Vector2d(m_x * scalar, m_y * scalar);
+    Vec2r operator*(const float& scalar) const {
+        return Vec2r(m_x * scalar, m_y * scalar);
     }
-    Vector2d operator*=(const float& scalar) {
+    Vec2r operator*=(const float& scalar) {
         m_x *= scalar;
         m_y *= scalar;
         return *this;
     }
-    Vector2d operator/(const float& scalar) const {
-        return Vector2d(m_x / scalar, m_y / scalar);
+    Vec2r operator/(const float& scalar) const {
+        return Vec2r(m_x / scalar, m_y / scalar);
     }
-    Vector2d operator/=(const float& scalar) {
+    Vec2r operator/=(const float& scalar) {
         m_x /= scalar;
         m_y /= scalar;
         return *this;

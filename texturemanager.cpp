@@ -16,6 +16,12 @@ void TextureManager::GetTextureDimensions(std::string id, SDL_FRect &dimensions)
     }
 }
 
+void TextureManager::setTextureBlend(std::string id, SDL_BlendMode mode) {
+    SDL_SetTextureBlendMode(mTextureMap[id], mode);
+}
+
+
+
 //string id es para identificar la imagen con un nombre
 bool TextureManager::load(std::string filename, std::string id, SDL_Renderer *pRenderer) {
 

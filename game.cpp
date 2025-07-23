@@ -3,6 +3,7 @@
 //
 
 #include "game.h"
+//#include <SDL3_image/SDL_image.h>
 
 
 Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
@@ -18,10 +19,11 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
 }
 // aquí se inicializa todo
 bool Game::init(const char* name, int width, int height, int flags) {
+
     if (SDL_Init(SDL_INIT_VIDEO) == true ) {
         if ((pWindow = SDL_CreateWindow(name, width, height, flags )) != nullptr) {
             if ((pRenderer = SDL_CreateRenderer(pWindow, NULL)) != nullptr)
-                SDL_SetRenderDrawColor(pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
             else {
                 SDL_Log("Failed to create renderer: %s", SDL_GetError());
                 return false;
@@ -37,19 +39,21 @@ bool Game::init(const char* name, int width, int height, int flags) {
     // fin de la inicialización del SDL_Window* y SDL_Renderer*, es decir, ventana y área de pintado
     bRunning = true;
     // Load the texture
-    if (!TheTextureManager::getInstance()->load("../assets/explosion.png", "txtExplosion", pRenderer)) {
+    if (!TheTextureManager::getInstance()->load("../assets/ball5.png", "ball2", pRenderer)) {
         SDL_Log("Failed to load texture");
         return false;
     }
-    TheTextureManager::getInstance()->GetTextureDimensions("txtExplosion", sourceRect);
+    TheTextureManager::getInstance()->setTextureBlend("ball2", SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
+    TheTextureManager::getInstance()->GetTextureDimensions("ball2", sourceRect);
     ancho = sourceRect.w;
     alto = sourceRect.h;
-    sourceRect.w /= 8; //
-    sourceRect.h /= 4; //
+    //sourceRect.w /= 8; //
+    //sourceRect.h /= 4; //
 
     // los actores del juego (que tienen un comportamiento) son agregados a un array "on the fly".
-    m_players.push_back(new Actor(new LoaderParams(0, 0, sourceRect.w, sourceRect.h, "txtExplosion")));
-    m_players.push_back(new Enemy(new LoaderParams(100, 100, sourceRect.w, sourceRect.h, "txtExplosion")));
+    m_players.push_back(new Actor(new LoaderParams(0, 0, sourceRect.w, sourceRect.h, "ball2")));
+
     return true;
 }
 

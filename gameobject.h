@@ -56,7 +56,7 @@ public:
     virtual void clean();
 
 protected:
-    Vector2d m_position, m_unidad, m_velocidad, m_aceleracion;
+    Vec2r m_position, m_unidad, m_velocidad, m_aceleracion, m_magnitude;
     int m_ancho, m_alto;
     int m_currentFrame; // ancho imagen en cuadros
     int m_currentRow; // alto imagen en filas
