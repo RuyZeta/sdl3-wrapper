@@ -6,6 +6,7 @@
 #define GAMEOBJECT_H
 #include <SDL3/SDL.h>
 #include <string>
+#include "movement.h"
 
 
 
@@ -14,6 +15,7 @@
 // una clase ayuda para almacenar los parámetros de un objeto en el juego
 
 class LoaderParams {
+
     int m_x, m_y, m_ancho, m_alto;
     std::string m_textureID;
 public:
@@ -35,7 +37,7 @@ public:
     virtual void update() = 0;
     virtual void clean() = 0;
 protected:
-    ObjetoAbstractoBase(const LoaderParams* pParams) {}
+     ObjetoAbstractoBase(const LoaderParams* pParams) {}
     virtual ~ObjetoAbstractoBase() {}
 };
 
@@ -47,14 +49,15 @@ class Objeto_en_Juego : public ObjetoAbstractoBase {
 public:
     Objeto_en_Juego(const LoaderParams* pParams);
 
-    ~Objeto_en_Juego() override {}
+    ~Objeto_en_Juego() {}
 
     virtual void draw();
     virtual void update();
     virtual void clean();
 
 protected:
-    int m_x, m_y, m_ancho, m_alto;
+    Vector2d m_position, m_unidad, m_velocidad, m_aceleracion;
+    int m_ancho, m_alto;
     int m_currentFrame; // ancho imagen en cuadros
     int m_currentRow; // alto imagen en filas
     std::string m_textureID; // ID de la textura

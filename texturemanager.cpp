@@ -35,7 +35,7 @@ bool TextureManager::load(std::string filename, std::string id, SDL_Renderer *pR
     return true;
 }
 
-void TextureManager::draw(std::string id, int x, int y, int width, int height, SDL_Renderer *pRenderer,
+void TextureManager::draw(std::string id, const int& x, const int& y, const int& width, const int& height, SDL_Renderer *pRenderer,
     SDL_FlipMode flip) {
 
     SDL_FRect sourceRect;
@@ -52,7 +52,8 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height, S
 
 }
 
-void TextureManager::drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame,
+void TextureManager::drawFrame(std::string id, const int& x, const int& y, const int& width, const int& height,
+    const int& currentRow, const int& currentFrame,
     SDL_Renderer *pRenderer, SDL_FlipMode flip) {
 
     SDL_FRect sourceRect;

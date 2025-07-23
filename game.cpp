@@ -15,10 +15,8 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.y = 0;
     destRect.w = 0;
     destRect.h = 0;
-
-
 }
-
+// aquí se inicializa todo
 bool Game::init(const char* name, int width, int height, int flags) {
     if (SDL_Init(SDL_INIT_VIDEO) == true ) {
         if ((pWindow = SDL_CreateWindow(name, width, height, flags )) != nullptr) {
@@ -36,6 +34,7 @@ bool Game::init(const char* name, int width, int height, int flags) {
         SDL_Log("Could not initialize SDL: %s", SDL_GetError());
         return false;
     }
+    // fin de la inicialización del SDL_Window* y SDL_Renderer*, es decir, ventana y área de pintado
     bRunning = true;
     // Load the texture
     if (!TheTextureManager::getInstance()->load("../assets/explosion.png", "txtExplosion", pRenderer)) {
@@ -48,19 +47,15 @@ bool Game::init(const char* name, int width, int height, int flags) {
     sourceRect.w /= 8; //
     sourceRect.h /= 4; //
 
-
-
-
-    m_players.push_back(new Actor(new LoaderParams(100, 100, sourceRect.w, sourceRect.h, "txtExplosion")));
-    m_players.push_back(new Enemy(new LoaderParams(300, 300, sourceRect.w, sourceRect.h, "txtExplosion")));
+    // los actores del juego (que tienen un comportamiento) son agregados a un array "on the fly".
+    m_players.push_back(new Actor(new LoaderParams(0, 0, sourceRect.w, sourceRect.h, "txtExplosion")));
+    m_players.push_back(new Enemy(new LoaderParams(100, 100, sourceRect.w, sourceRect.h, "txtExplosion")));
     return true;
 }
 
 void Game::render() {
     SDL_RenderClear(pRenderer);
-    // el origen es la textura y sourceRect. El destino es el Renderer (la ventana) y destRect.
-    // TheTextureManager::getInstance()->drawFrame("txtExplosion", 0  , 0, sourceRect.w, sourceRect.h,
-    //m_currentRow, m_currentFrame, pRenderer);
+
 
     for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->draw();
@@ -70,9 +65,7 @@ void Game::render() {
 }
 
 void Game::update() {
-    /* m_currentFrame = ((m_currentFrame+1) % 8);
-    if (!m_currentFrame)
-        m_currentRow = ((m_currentRow+1) % 4);*/
+
     for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->update();
     }

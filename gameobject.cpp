@@ -6,10 +6,10 @@
 #include "game.h"
 #include "texturemanager.h"
 
-Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoBase(pParams) {
+Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoBase(pParams),
+m_position(pParams->getX(), pParams->getY()), m_unidad(1,1), m_velocidad(0, 0), m_aceleracion(0, 0){
 
-    m_x = pParams->getX();
-    m_y = pParams->getY();
+
     m_ancho = pParams->getAncho();
     m_alto = pParams->getAlto();
     m_textureID = pParams->getTextureID();
@@ -17,12 +17,18 @@ Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoB
     m_currentRow = 1; // inicializa la fila actual
 }
 
+// esto va entre medio de clear y present. Es la parte que pinta.
+// posiblemente este código se comparte entre todas las clases derivadas
 void Objeto_en_Juego::draw() {
-    TextureManager::getInstance()->drawFrame(m_textureID, m_x, m_y, m_ancho, m_alto,
+    TextureManager::getInstance()->drawFrame(m_textureID, static_cast<int>(m_position.getX()),
+        static_cast<int>(m_position.getY()), m_ancho, m_alto,
         m_currentRow, m_currentFrame, TheGame::getInstance()->getRenderer());
 }
 
 void Objeto_en_Juego::update() {
+
+    m_velocidad += m_aceleracion;
+    m_position += m_velocidad;
 }
 
 void Objeto_en_Juego::clean() {
@@ -42,7 +48,10 @@ void Actor::draw() {
 }
 
 void Actor::update() {
-    m_x -= 1;
+    if (!(m_currentFrame = static_cast<int>((SDL_GetTicks() / 100) % 8)))
+        m_currentRow = (m_currentRow+1)%3;
+
+    Objeto_en_Juego::update();
 }
 
 ////////////////////////
@@ -55,9 +64,7 @@ void Enemy::draw() {
 }
 
 void Enemy::update() {
-    m_y += 1;
-    m_x += 1;
-    m_currentFrame = int ((SDL_GetTicks() / 100) % 6);
+    m_position += m_unidad*2;
 }
 
 

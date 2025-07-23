@@ -48,11 +48,15 @@ public:
     }
     SDL_Renderer* getRenderer() const { return pRenderer; }
     bool init(const char *name, int width, int height, int flags);
+
+    bool isRunning() const {return bRunning;};
+    // eventos del loop
+    void handeEvents();
     void render();
     void update();
-    void handeEvents();
+    //
     void clean();
-    bool isRunning() {return bRunning;};
+
 };
 
 typedef Game TheGame;
