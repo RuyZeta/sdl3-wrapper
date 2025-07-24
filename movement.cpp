@@ -3,3 +3,9 @@
 //
 
 #include "movement.h"
+
+
+
+float Vec2r::largo_vector() {
+    return sqrt(m_x * m_x + m_y * m_y);
+}

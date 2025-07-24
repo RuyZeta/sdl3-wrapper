@@ -7,38 +7,42 @@
 
 #include <cmath>
 
+// macro para comparar dos números de punto flotante
+#define CMP(x, y) ((fabs((x) - (y)) < 1e-6) * fmaxf(1.0f, fmaxf(fabs(x), fabs(y))))
+
 //vector en un plano cartesiano
 class Vec2r {
 
     float m_x, m_y;
 public:
-    Vec2r(float x, float y) : m_x(x), m_y(y) {}
-    Vec2r() : m_x(0), m_y(0) {};
+    Vec2r(const float& x, const float& y) : m_x(x), m_y(y) {}
+    Vec2r() : m_x(0.0f), m_y(0.0f) {};
     Vec2r(const Vec2r &other) { *this = other; }
-    Vec2r &operator=(const Vec2r &other) {
-        if (this == &other)
-            return *this;
-        m_x = other.m_x;
-        m_y = other.m_y;
-        return *this;
-    }
-    bool operator==(const Vec2r &other) const {
-        return m_x == other.m_x && m_y == other.m_y;
-    }
     float getX() const { return m_x; }
     float getY() const { return m_y; }
     void setX(const float& x) { m_x = x; }
     void setY(const float& y) { m_y = y; }
-    float largo_vector () {return sqrt(m_x * m_x + m_y * m_y);}
-    Vec2r operator+(const Vec2r& other) const {
-        return {m_x + other.m_x, m_y + other.m_y}; // lo mismo que retornar cartesianvector
+
+    // operaciones con vectores
+    Vec2r &operator=(const Vec2r &r) {
+        if (this != &r) {
+            m_x = r.m_x;
+            m_y = r.m_y;
+        }
+        return *this;
+    }
+    bool operator==(const Vec2r &other) const {
+        return CMP(m_x, other.m_x) && CMP(m_y, other.m_y);
+    }
+    Vec2r operator+(const Vec2r& rhs) const {
+        return Vec2r(m_x + rhs.m_x, m_y + rhs.m_y);
     }
     Vec2r operator-(const Vec2r& other) const {
         return {m_x - other.m_x, m_y - other.m_y};
     }
-    Vec2r& operator+=(const Vec2r& other) {
-        m_x += other.m_x;
-        m_y += other.m_y;
+    Vec2r& operator+=(const Vec2r& rhs) {
+        m_x += rhs.m_x;
+        m_y += rhs.m_y;
         return *this;
     }
     Vec2r& operator-=(const Vec2r &other) {
@@ -48,6 +52,9 @@ public:
     }
     Vec2r operator*(const float& scalar) const {
         return Vec2r(m_x * scalar, m_y * scalar);
+    }
+    Vec2r operator*(const Vec2r& other) const {
+        return Vec2r(m_x * other.m_x, m_y * other.m_y);
     }
     Vec2r operator*=(const float& scalar) {
         m_x *= scalar;
@@ -67,8 +74,8 @@ public:
         if (l > 0)
             (*this) *= 1 / l;
     }
+    float largo_vector () const ;
 };
-
 
 
 

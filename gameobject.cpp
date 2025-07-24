@@ -67,7 +67,7 @@ void Enemy::draw() {
 }
 
 void Enemy::update() {
-    m_position += m_unidad*2;
+
 }
 
 
