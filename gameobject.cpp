@@ -7,8 +7,8 @@
 #include "texturemanager.h"
 
 Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoBase(pParams),
-m_position(pParams->getX(), pParams->getY()), m_unidad(1,1), m_velocidad(0, 0), m_aceleracion(0, 0),
-m_magnitude(1, 0.5){
+m_position(pParams->getX(), pParams->getY()), m_unidad(1,1), m_velocidad(1, 1), m_aceleracion(0, 0),
+m_magnitude(1, 0.4), incx(0), incy(0){
 
 
     m_ancho = pParams->getAncho();
@@ -25,15 +25,17 @@ void Objeto_en_Juego::draw() {
     // asi, cambiar x e y en realidad da movimiento a la imagen
     // este código se va a reutilizar en todas las clases derivadas de Objeto en Juego
     // simplificando las cosas ya solo será necesario actualizar x e y para simular movimiento
-    TextureManager::getInstance()->drawFrame(m_textureID, static_cast<int>(m_position.getX()),
-        static_cast<int>(m_position.getY()), m_ancho, m_alto,
-        m_currentRow, m_currentFrame, TheGame::getInstance()->getRenderer());
+    TextureManager::getInstance()->drawFrame(m_textureID,
+        static_cast<int>(m_position.getX()),static_cast<int>(m_position.getY()), //actualiza dinámicamente aquí
+        m_ancho, m_alto,
+        m_currentRow, m_currentFrame,
+        TheGame::getInstance()->getRenderer());
 }
 
 void Objeto_en_Juego::update() {
 
     //m_velocidad += m_aceleracion;
-    //m_position += m_velocidad;
+    m_position += m_velocidad;
     m_position;
 }
 
@@ -53,7 +55,21 @@ void Actor::draw() {
 
 void Actor::update() {
 
-    m_position += m_magnitude; // mueve el actor en la dirección de la unidad
+    if (m_position.getX()<700) {
+        incx = 1;
+    }
+    else if (m_position.getX()>= 700) {
+        incx = -1;
+    }
+    if (m_position.getY()<400) {
+        incy = 1;
+    }
+    else {
+        incy = -1; // disminuye 1, pero inmediatamente el if de arriba lo aumenta todo
+    }
+    const Vec2r inc(incx, incy);
+    m_position += inc;
+
     Objeto_en_Juego::update();
 }
 

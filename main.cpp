@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
     // Initialize SDL
 
-    if (TheGame::getInstance()->init("SDL3 Game", 2500, 1800, SDL_WINDOW_RESIZABLE)) {
+    if (TheGame::getInstance()->init("SDL3 Game", 2000, 1200, SDL_WINDOW_RESIZABLE)) {
 
         while (TheGame::getInstance()->isRunning()) {
             const Uint32 frameStart = SDL_GetTicks();

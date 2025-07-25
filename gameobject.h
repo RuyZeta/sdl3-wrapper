@@ -18,6 +18,7 @@ class LoaderParams {
 
     int m_x, m_y, m_ancho, m_alto;
     std::string m_textureID;
+
 public:
     LoaderParams(const int &x, const int &y, const int &ancho, const int &alto, std::string textureID)
     : m_x(x), m_y(y),m_ancho(ancho), m_alto(alto), m_textureID(textureID) {}
@@ -61,6 +62,7 @@ protected:
     int m_currentFrame; // ancho imagen en cuadros
     int m_currentRow; // alto imagen en filas
     std::string m_textureID; // ID de la textura
+    int incx, incy;
 };
 
 

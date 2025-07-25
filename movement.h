@@ -8,6 +8,8 @@
 #include <cmath>
 
 // macro para comparar dos números de punto flotante
+// esto es por el error que se produce en la representación binaria de números punto flotante
+// no se pueden comparar en forma simple, más bien tomar un margen de comparación que es aceptable
 #define CMP(x, y) ((fabs((x) - (y)) < 1e-6) * fmaxf(1.0f, fmaxf(fabs(x), fabs(y))))
 
 //vector en un plano cartesiano
@@ -69,12 +71,11 @@ public:
         m_y /= scalar;
         return *this;
     }
-    void normalize() {
-        const float l = largo_vector();
-        if (l > 0)
-            (*this) *= 1 / l;
-    }
+    void normalize();
     float largo_vector () const ;
+    float magnitude () const;
+    float dot(const Vec2r& other) const;
+    Vec2r perpendicular() const;
 };
 
 

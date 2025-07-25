@@ -17,7 +17,7 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.w = 0;
     destRect.h = 0;
 }
-// aquí se inicializa todo
+// aquí se inicializa
 bool Game::init(const char* name, int width, int height, int flags) {
 
     if (SDL_Init(SDL_INIT_VIDEO) == true ) {
@@ -39,7 +39,7 @@ bool Game::init(const char* name, int width, int height, int flags) {
     // fin de la inicialización del SDL_Window* y SDL_Renderer*, es decir, ventana y área de pintado
     bRunning = true;
     // Load the texture
-    if (!TheTextureManager::getInstance()->load("../assets/ball5.png", "ball2", pRenderer)) {
+    if (!TheTextureManager::getInstance()->load("../assets/ball7.png", "ball2", pRenderer)) {
         SDL_Log("Failed to load texture");
         return false;
     }
