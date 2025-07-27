@@ -21,11 +21,22 @@ float Vec2r::magnitude() const {
     return sqrt(m_x * m_x + m_y * m_y);
 }
 
+// el producto punto ve si dos vectores apuntan a la misma dirección (positivo)
+// direcciones opuestas (negativo). Perpendiculares (0).
 float Vec2r::dot(const Vec2r &other) const {
     return m_x * other.m_x + m_y * other.m_y;
 }
 
 Vec2r Vec2r::perpendicular() const {
     return Vec2r(this->m_y, -this->m_x);
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// particula
+///
+
+particula::particula(const float &x, const float &y, const float &masa) {
+    m_position = Vec2r(x, y);
+    m_masa = masa;
 }
 

@@ -3,7 +3,7 @@
 //
 
 #include "game.h"
-//#include <SDL3_image/SDL_image.h>
+
 
 
 Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
@@ -43,8 +43,8 @@ bool Game::init(const char* name, int width, int height, int flags) {
         SDL_Log("Failed to load texture");
         return false;
     }
-    TheTextureManager::getInstance()->setTextureBlend("ball2", SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
+    //TheTextureManager::getInstance()->setTextureBlend("ball2", SDL_BLENDMODE_BLEND);
+    //SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
     TheTextureManager::getInstance()->GetTextureDimensions("ball2", sourceRect);
     ancho = sourceRect.w;
     alto = sourceRect.h;
@@ -53,26 +53,32 @@ bool Game::init(const char* name, int width, int height, int flags) {
 
     // los actores del juego (que tienen un comportamiento) son agregados a un array "on the fly".
     m_players.push_back(new Actor(new LoaderParams(0, 0, sourceRect.w, sourceRect.h, "ball2")));
+    ///
+    circulo = new circle(400, 400, 10);
 
     return true;
 }
 
 void Game::render() {
+    SDL_SetRenderDrawColor(pRenderer, color>>16, color>>8, color, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(pRenderer);
 
 
-    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+    /*for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->draw();
-    }
+    }¨*/
+    //filledCircleColor(pRenderer, 200, 200, 50, 0xff000000);
+    circulo->draw();
 
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
 
 void Game::update() {
 
-    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+    /*for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->update();
-    }
+    }*/
+    circulo->update();
 }
 
 void Game::handeEvents() {
@@ -89,6 +95,8 @@ void Game::handeEvents() {
 }
 
 void Game::clean() {
+    delete circulo;
+
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();

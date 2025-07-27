@@ -6,9 +6,9 @@
 #include "game.h"
 #include "texturemanager.h"
 
-Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoBase(pParams),
+Objeto_en_Juego::Objeto_en_Juego(const LoaderParams *pParams) : ObjetoAbstractoBase(/*pParams*/),
 m_position(pParams->getX(), pParams->getY()), m_unidad(1,1), m_velocidad(1, 1), m_aceleracion(0, 0),
-m_magnitude(1, 0.4), incx(0), incy(0){
+m_magnitude(1, 0.4), xAxis(700, 0), yAxis(0, 400){
 
 
     m_ancho = pParams->getAncho();
@@ -25,17 +25,17 @@ void Objeto_en_Juego::draw() {
     // asi, cambiar x e y en realidad da movimiento a la imagen
     // este código se va a reutilizar en todas las clases derivadas de Objeto en Juego
     // simplificando las cosas ya solo será necesario actualizar x e y para simular movimiento
-    TextureManager::getInstance()->drawFrame(m_textureID,
+    TextureManager::getInstance()->drawFrame(m_textureID, //aqui la textura
         static_cast<int>(m_position.getX()),static_cast<int>(m_position.getY()), //actualiza dinámicamente aquí
         m_ancho, m_alto,
         m_currentRow, m_currentFrame,
-        TheGame::getInstance()->getRenderer());
+        TheGame::getInstance()->getRenderer()); //aquí sale el renderer
 }
 
 void Objeto_en_Juego::update() {
 
     //m_velocidad += m_aceleracion;
-    m_position += m_velocidad;
+
     m_position;
 }
 
@@ -48,42 +48,29 @@ void Objeto_en_Juego::clean() {
 
 
 void Actor::draw() {
-
     Objeto_en_Juego::draw();
-
 }
 
 void Actor::update() {
-
-    if (m_position.getX()<700) {
-        incx = 1;
-    }
-    else if (m_position.getX()>= 700) {
-        incx = -1;
-    }
-    if (m_position.getY()<400) {
-        incy = 1;
-    }
-    else {
-        incy = -1; // disminuye 1, pero inmediatamente el if de arriba lo aumenta todo
-    }
-    const Vec2r inc(incx, incy);
-    m_position += inc;
-
+    m_position += m_unidad;
     Objeto_en_Juego::update();
 }
-
-////////////////////////
-/// Enemy class
+/////////////////////////////////////////
+/// circle
 ///
-
-void Enemy::draw() {
-
-    Objeto_en_Juego::draw();
+circle::circle(const int &x, const int &y, const int &radio) : ObjetoAbstractoBase(), x(x), y(y), radio(radio) {
+    m_particula = new particula(x, y, radio);
+    vel = Vec2r(x, y);
 }
 
-void Enemy::update() {
+void circle::draw() {
+    filledCircleColor(TheGame::getInstance()->getRenderer(), m_particula->getPosition().getX(),
+        m_particula->getPosition().getY(), radio, 0xff000000);
+}
 
+void circle::update() {
+    m_particula->setVelocity(Vec2r(1, 0.5));
+    m_particula->setPosition(m_particula->getPosition() += m_particula->getVelocity());
 }
 
 

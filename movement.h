@@ -78,6 +78,29 @@ public:
     Vec2r perpendicular() const;
 };
 
+////////////////////////////////////////////////////////////////////////
+//////////////////////// particula
+///
 
+
+class particula {
+    Vec2r m_position;
+    Vec2r m_velocity;
+    Vec2r m_acceleration;
+    float m_masa;
+public:
+    particula(const float& x, const float& y, const float& masa);
+    ~particula(){}
+    Vec2r getPosition() const { return m_position; }
+    Vec2r getVelocity() const { return m_velocity; }
+    Vec2r getAcceleration() const { return m_acceleration; }
+    float getMasa() const { return m_masa; }
+    void setMasa(const float& masa) { m_masa = masa; }
+    void setPosition(const Vec2r& p) {m_position = p;};
+    void setVelocity(const Vec2r& v) {m_velocity = v;}
+    void setAcceleration(const Vec2r& a) { m_acceleration = a; }
+
+
+};
 
 #endif //MOVEMENT_H

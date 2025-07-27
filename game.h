@@ -9,6 +9,8 @@
 #include "texturemanager.h"
 #include "gameobject.h"
 #include <vector>
+#include <SDL3_gfx/SDL3_gfxPrimitives.h>
+#include "movement.h"
 
 // this is the game class that will handle the game loop, events, rendering, etc.
 // hecho como singleton
@@ -26,9 +28,12 @@ class Game {
     float ancho, alto;
     int m_currentFrame;
     int m_currentRow;
+    uint32_t color = 0xff056263;
 
     Actor* m_actor; // actor que se va a mover
-    Enemy* m_enemy;
+    circle* circulo;
+
+
 
     // todos los actores del juego
     std::vector<ObjetoAbstractoBase *> m_players;

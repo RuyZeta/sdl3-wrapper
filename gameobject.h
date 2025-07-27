@@ -7,6 +7,7 @@
 #include <SDL3/SDL.h>
 #include <string>
 #include "movement.h"
+#include <SDL3_gfx/SDL3_gfxPrimitives.h>
 
 
 
@@ -38,7 +39,7 @@ public:
     virtual void update() = 0;
     virtual void clean() = 0;
 protected:
-     ObjetoAbstractoBase(const LoaderParams* pParams) {}
+     ObjetoAbstractoBase(/*const LoaderParams* pParams*/) {}
     virtual ~ObjetoAbstractoBase() {}
 };
 
@@ -62,7 +63,8 @@ protected:
     int m_currentFrame; // ancho imagen en cuadros
     int m_currentRow; // alto imagen en filas
     std::string m_textureID; // ID de la textura
-    int incx, incy;
+    Vec2r xAxis;
+    Vec2r yAxis;
 };
 
 
@@ -80,14 +82,20 @@ public:
 
 };
 
-class Enemy : public Objeto_en_Juego {
-public:
-    Enemy(const LoaderParams* pParams) : Objeto_en_Juego(pParams) {}
-    ~Enemy() {}
+// clase para reutilizar código en las clases derivadas
+class circle : public ObjetoAbstractoBase {
 
-    void draw();
-    void update();
-    void clean() { Objeto_en_Juego::clean(); SDL_Log("Player::clean"); }
+    particula* m_particula;
+    Vec2r vel;
+
+public:
+    circle(const int& x, const int& y, const int& radio);
+    virtual ~circle() {}
+    virtual void draw();
+    virtual void update();
+    virtual void clean() {};
+protected:
+    int x, y, radio;
 };
 
 #endif //GAMEOBJECT_H
