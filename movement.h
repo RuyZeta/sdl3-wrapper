@@ -98,6 +98,8 @@ public:
     float getMasa() const { return m_masa; }
     void setMasa(const float& masa) { m_masa = masa; }
     void setPosition(const Vec2r& p) {m_position = p;}
+    void setPosX(const float& x) { m_position.setX(x); }
+    void setPosY(const float& y) { m_position.setY(y); }
     void setVelocity(const Vec2r& v) {m_velocity = v;}
     void setAcceleration(const Vec2r& a) { m_acceleration = a; }
 

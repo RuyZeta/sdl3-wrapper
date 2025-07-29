@@ -44,7 +44,6 @@ particula::particula(const float &x, const float &y, const float &masa) {
 }
 
 Vec2r particula::getPosition() {
-
     return m_position;
 }
 

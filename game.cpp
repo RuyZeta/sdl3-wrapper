@@ -21,7 +21,7 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
 bool Game::init(const char* name, int width, int height, int flags) {
 
     if (SDL_Init(SDL_INIT_VIDEO) == true ) {
-        const SDL_DisplayMode* displayMode = SDL_GetCurrentDisplayMode(2);
+        const SDL_DisplayMode* displayMode = SDL_GetCurrentDisplayMode(1);
         ancho = displayMode->w;
         alto = displayMode->h;
         if ((pWindow = SDL_CreateWindow(name, ancho, alto, flags )) != nullptr) {
@@ -47,8 +47,9 @@ bool Game::init(const char* name, int width, int height, int flags) {
     circulo = new circle(850, 450, 10, 3);
     circulito = new circle(1350, 450, 12, 4);
 
-    m_players.push_back(circulo);
-    m_players.push_back(circulito);
+    //m_players.push_back(circulo);
+    //m_players.push_back(circulito);
+
 
     return true;
 }
@@ -57,9 +58,10 @@ void Game::render() {
     SDL_SetRenderDrawColor(pRenderer, color>>16, color>>8, color, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(pRenderer);
 
-    for (std::vector<ObjetoAbstractoBase*>::iterator it = m_players.begin(); it != m_players.end(); it++) {
+    /*for (std::vector<ObjetoAbstractoBase*>::iterator it = m_players.begin(); it != m_players.end(); ++it) {
         (*it)->draw();
-    }
+    }*/
+    circulo->draw();
 
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
@@ -79,9 +81,10 @@ void Game::update() {
 
     timePreviousFrame = SDL_GetTicks();
 
-    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+    /*for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->update();
-    }
+    }*/
+    circulo->update();
 
 }
 
@@ -105,7 +108,7 @@ void Game::handeEvents() {
 
 void Game::clean() {
     delete circulo;
-    delete circulito;
+    //delete circulito;
 
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);

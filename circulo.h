@@ -8,7 +8,7 @@
 #include "gameobject.h"
 
 class circle : public ObjetoAbstractoBase {
-    Vec2r gravedad;
+    Vec2r gravedad, peso;
     particula* m_particula;
     int x, y, radio;
 public:
