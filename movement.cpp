@@ -5,6 +5,61 @@
 #include "movement.h"
 
 
+Vec2r & Vec2r::operator=(const Vec2r &r) {
+    if (this != &r) {
+        m_x = r.m_x;
+        m_y = r.m_y;
+    }
+    return *this;
+}
+
+bool Vec2r::operator==(const Vec2r &rhs) const {
+    return CMP(m_x, rhs.m_x) && CMP(m_y, rhs.m_y);
+}
+
+Vec2r Vec2r::operator+(const Vec2r &rhs) const {
+    return Vec2r(m_x + rhs.m_x, m_y + rhs.m_y);
+}
+
+Vec2r Vec2r::operator-(const Vec2r &other) const {
+    return {m_x - other.m_x, m_y - other.m_y};
+}
+
+Vec2r Vec2r::operator+=(const Vec2r &rhs) {
+    m_x += rhs.m_x;
+    m_y += rhs.m_y;
+    return *this;
+}
+
+Vec2r & Vec2r::operator-=(const Vec2r &other) {
+    m_x -= other.m_x;
+    m_y -= other.m_y;
+    return *this;
+}
+
+Vec2r Vec2r::operator*(const float &scalar) const {
+    return Vec2r(m_x * scalar, m_y * scalar);
+}
+
+Vec2r Vec2r::operator*(const Vec2r &other) const {
+    return Vec2r(m_x * other.m_x, m_y * other.m_y);
+}
+
+Vec2r Vec2r::operator*=(const float &scalar) {
+    m_x *= scalar;
+    m_y *= scalar;
+    return *this;
+}
+
+Vec2r Vec2r::operator/(const float &scalar) const {
+    return Vec2r((m_x / scalar), (m_y / scalar));
+}
+
+Vec2r Vec2r::operator/=(const float &scalar) {
+    m_x /= scalar;
+    m_y /= scalar;
+    return *this;
+}
 
 void Vec2r::normalize() {
     const float l = largo_vector();
@@ -41,9 +96,14 @@ particula::particula(const float &x, const float &y, const float &masa) {
     m_velocity = Vec2r(0, 0);
     m_sumForces = Vec2r(0, 0);
     m_masa = masa;
+    if (m_masa != 0) {
+        m_invMasa = 1.0f / m_masa; // inversa de la masa para evitar dividir por cero
+    } else {
+        m_invMasa = 0.0f; // si la masa es cero, la inversa es cero
+    }
 }
 
-Vec2r particula::getPosition() {
+Vec2r particula::getPosition() const {
     return m_position;
 }
 

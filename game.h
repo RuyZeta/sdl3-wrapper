@@ -32,6 +32,7 @@ class Game {
 
     circle* circulo;
     circle* circulito;
+    Vec2r pushForce;
 
     std::vector<ObjetoAbstractoBase *> m_players;
     // singleton
@@ -62,6 +63,7 @@ public:
     // getters
     int get_Ancho() const { return ancho; }
     int get_Alto() const { return alto; }
+    Vec2r get_PushForce() const { return pushForce; }
 
 };
 

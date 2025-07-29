@@ -16,6 +16,7 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.y = 0;
     destRect.w = 0;
     destRect.h = 0;
+    pushForce = Vec2r(0, 0);
 }
 // aquí se inicializa
 bool Game::init(const char* name, int width, int height, int flags) {
@@ -95,10 +96,23 @@ void Game::handeEvents() {
                 bRunning = false;
                 break;
             case SDL_EVENT_KEY_DOWN:
-                if (e.key.key == SDLK_ESCAPE) {
+                if (e.key.key == SDLK_ESCAPE)
                     bRunning = false;
-                }
-
+                if (e.key.key == SDLK_UP)
+                    pushForce.setY(-50.0f * PIXELS_POR_METRO);
+                if (e.key.key == SDLK_DOWN)
+                    pushForce.setY(50.0f * PIXELS_POR_METRO);
+                if (e.key.key == SDLK_LEFT)
+                    pushForce.setX(-50.0f * PIXELS_POR_METRO);
+                if (e.key.key == SDLK_RIGHT)
+                    pushForce.setX(50.0f * PIXELS_POR_METRO);
+                break;
+            case SDL_EVENT_KEY_UP:
+                if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN)
+                    pushForce.setY(0.0f);
+                if (e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT)
+                    pushForce.setX(0.0f);
+                break;
 
             default:
                 break;

@@ -6,7 +6,6 @@
 #define MOVEMENT_H
 
 #include <cmath>
-
 // macro para comparar dos números de punto flotante
 // esto es por el error que se produce en la representación binaria de números punto flotante
 // no se pueden comparar en forma simple, más bien tomar un margen de comparación que es aceptable
@@ -14,7 +13,6 @@
 
 //vector en un plano cartesiano
 class Vec2r {
-
     float m_x, m_y;
 public:
     Vec2r(const float& x, const float& y) : m_x(x), m_y(y) {}
@@ -26,51 +24,18 @@ public:
     void setY(const float& y) { m_y = y; }
 
     // operaciones con vectores
-    Vec2r &operator=(const Vec2r &r) {
-        if (this != &r) {
-            m_x = r.m_x;
-            m_y = r.m_y;
-        }
-        return *this;
-    }
-    bool operator==(const Vec2r &other) const {
-        return CMP(m_x, other.m_x) && CMP(m_y, other.m_y);
-    }
-    Vec2r operator+(const Vec2r& rhs) const {
-        return Vec2r(m_x + rhs.m_x, m_y + rhs.m_y);
-    }
-    Vec2r operator-(const Vec2r& other) const {
-        return {m_x - other.m_x, m_y - other.m_y};
-    }
-    Vec2r& operator+=(const Vec2r& rhs) {
-        m_x += rhs.m_x;
-        m_y += rhs.m_y;
-        return *this;
-    }
-    Vec2r& operator-=(const Vec2r &other) {
-        m_x -= other.m_x;
-        m_y -= other.m_y;
-        return *this;
-    }
-    Vec2r operator*(const float& scalar) const {
-        return Vec2r(m_x * scalar, m_y * scalar);
-    }
-    Vec2r operator*(const Vec2r& other) const {
-        return Vec2r(m_x * other.m_x, m_y * other.m_y);
-    }
-    Vec2r operator*=(const float& scalar) {
-        m_x *= scalar;
-        m_y *= scalar;
-        return *this;
-    }
-    Vec2r operator/(const float& scalar) const {
-        return Vec2r((m_x / scalar), (m_y / scalar));
-    }
-    Vec2r operator/=(const float& scalar) {
-        m_x /= scalar;
-        m_y /= scalar;
-        return *this;
-    }
+    bool operator==(const Vec2r &rhs) const;
+    Vec2r operator*(const float& scalar) const;
+    Vec2r operator*(const Vec2r& other) const;
+    Vec2r operator+(const Vec2r& rhs) const;
+    Vec2r operator-(const Vec2r& other) const;
+    Vec2r operator/(const float& scalar) const;
+    Vec2r operator+=(const Vec2r& rhs);
+    Vec2r& operator-=(const Vec2r &other);
+    Vec2r operator*=(const float& scalar);
+    Vec2r operator/=(const float& scalar);
+    Vec2r &operator=(const Vec2r &r);
+
     void normalize();
     float largo_vector () const ;
     float magnitude () const;
@@ -81,18 +46,17 @@ public:
 ////////////////////////////////////////////////////////////////////////
 //////////////////////// particula
 ///
-
-
 class particula {
     Vec2r m_position;
     Vec2r m_velocity;
     Vec2r m_acceleration;
     Vec2r m_sumForces;
     float m_masa;
+    float m_invMasa; // inversa de la masa para evitar dividir por cero
 public:
     particula(const float& x, const float& y, const float& masa);
     ~particula(){}
-    Vec2r getPosition() ;
+    Vec2r getPosition() const;
     Vec2r getVelocity() const;
     Vec2r getAcceleration() const;
     float getMasa() const { return m_masa; }

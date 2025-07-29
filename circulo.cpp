@@ -25,6 +25,7 @@ void circle::update() {
     // integra la aceleración con la velocidad  para encontrar la nueva posición
     m_particula->addForces(peso);
     m_particula->addForces(Vec2r(190, 0)); // viento
+    m_particula->addForces(TheGame::getInstance()->get_PushForce()); // fuerza de empuje
     m_particula->integrate(TheGame::deltaTime);
 
     if ((m_particula->getPosition().getX() - radio) <= 0) {
