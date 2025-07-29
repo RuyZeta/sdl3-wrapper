@@ -9,10 +9,6 @@
 #include "movement.h"
 #include <SDL3_gfx/SDL3_gfxPrimitives.h>
 
-
-
-
-
 // una clase ayuda para almacenar los parámetros de un objeto en el juego
 
 class LoaderParams {
@@ -83,19 +79,6 @@ public:
 };
 
 // clase para reutilizar código en las clases derivadas
-class circle : public ObjetoAbstractoBase {
 
-    particula* m_particula;
-    Vec2r vel;
-
-public:
-    circle(const int& x, const int& y, const int& radio);
-    virtual ~circle() {}
-    virtual void draw();
-    virtual void update();
-    virtual void clean() {};
-protected:
-    int x, y, radio;
-};
 
 #endif //GAMEOBJECT_H

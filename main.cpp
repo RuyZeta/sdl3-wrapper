@@ -11,17 +11,14 @@
 int main(int argc, char *argv[]) {
 
     // Initialize SDL
-    /*FPSmanager fsmanager;
-    SDL_initFramerate(&fsmanager);
-    SDL_setFramerate(&fsmanager, FPS);*/
-    if (TheGame::getInstance()->init("SDL3 Game", 2000, 1200, SDL_WINDOW_BORDERLESS)) {
+    if (TheGame::getInstance()->init("SDL3 Game", 2000, 1200,
+        SDL_WINDOW_BORDERLESS)) {
 
         while (TheGame::getInstance()->isRunning()) {
 
             TheGame::getInstance()->handeEvents();
             TheGame::getInstance()->update();
             TheGame::getInstance()->render();
-            //SDL_framerateDelay(&fsmanager);
         }
     } else {
         SDL_Log("Game initialization failed.");

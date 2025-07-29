@@ -41,24 +41,14 @@ bool Game::init(const char* name, int width, int height, int flags) {
     }
     // fin de la inicialización del SDL_Window* y SDL_Renderer*, es decir, ventana y área de pintado
     bRunning = true;
-    // Load the texture
-    /*if (!TheTextureManager::getInstance()->load("../assets/ball5.png", "ball2", pRenderer)) {
-        SDL_Log("Failed to load texture");
-        return false;
-    }*/
-    //TheTextureManager::getInstance()->setTextureBlend("ball2", SDL_BLENDMODE_BLEND);
-    //SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
-    /*TheTextureManager::getInstance()->GetTextureDimensions("ball2", sourceRect);
-    ancho = sourceRect.w;
-    alto = sourceRect.h;*/
-    //sourceRect.w /= 8; //
-    //sourceRect.h /= 4; //
 
-    // los actores del juego (que tienen un comportamiento) son agregados a un array "on the fly".
-    //m_players.push_back(new Actor(new LoaderParams(0, 0, sourceRect.w, sourceRect.h, "ball2")));
-    ///
-    circulo = new circle(1450, 50, 10);
+    //if (!TheTextureManager::getInstance()->load("../assets/ball5.png", "ball2", pRenderer))
 
+    circulo = new circle(850, 450, 10, 3);
+    circulito = new circle(1350, 450, 12, 4);
+
+    m_players.push_back(circulo);
+    m_players.push_back(circulito);
 
     return true;
 }
@@ -67,36 +57,32 @@ void Game::render() {
     SDL_SetRenderDrawColor(pRenderer, color>>16, color>>8, color, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(pRenderer);
 
-
-    /*for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
-        m_players[i]->draw();
-    }¨*/
-    //filledCircleColor(pRenderer, 200, 200, 50, 0xff000000);
-    circulo->draw();
+    for (std::vector<ObjetoAbstractoBase*>::iterator it = m_players.begin(); it != m_players.end(); it++) {
+        (*it)->draw();
+    }
 
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
-int Game::timePreviousFrame = 0;
-float Game::deltaTime = 0.0f;
+
+
 
 void Game::update() {
-    /*for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
-        m_players[i]->update();
-    }*/
-    // si va muy rápido para 60fps, se agrega una demora
 
-    int timeToWait = MILISEGUNDOS_POR_FRAME - (SDL_GetTicks() - timePreviousFrame);
-    if (timeToWait > 0)  {
+    // si va muy rápido para 60fps, se agrega una demora
+    const int timeToWait = MILISEGUNDOS_POR_FRAME - (SDL_GetTicks() - timePreviousFrame);
+    if (timeToWait > 0)
         SDL_Delay(timeToWait);
-    }
+
     deltaTime = (SDL_GetTicks() - timePreviousFrame) / 1000.0f; // tiempo en segundos
-    if (deltaTime > 0.16f) { // si es mayor a 0.16 segundos, se limita a 0.16 para evitar problemas de velocidad
+    if (deltaTime > 0.16f)  // si es mayor a 0.16 segundos, se limita a 0.16 para evitar problemas de velocidad
         deltaTime = 0.016f; // 60 fps
-    }
 
     timePreviousFrame = SDL_GetTicks();
 
-    circulo->update();
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+        m_players[i]->update();
+    }
+
 }
 
 void Game::handeEvents() {
@@ -119,6 +105,7 @@ void Game::handeEvents() {
 
 void Game::clean() {
     delete circulo;
+    delete circulito;
 
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
@@ -126,3 +113,5 @@ void Game::clean() {
 }
 
 Game* Game::s_pInstance = nullptr;
+int Game::timePreviousFrame = 0;
+float Game::deltaTime = 0.0f;

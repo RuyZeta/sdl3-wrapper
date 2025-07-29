@@ -7,6 +7,6 @@
 
 constexpr int FPS = 60;
 constexpr int MILISEGUNDOS_POR_FRAME = 1000/FPS;
-constexpr int PIXELS_POR_METRO = 32;
+constexpr int PIXELS_POR_METRO = 50;
 
 #endif //CONSTANTES_H

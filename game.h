@@ -12,6 +12,7 @@
 #include <SDL3_gfx/SDL3_gfxPrimitives.h>
 #include "movement.h"
 #include "constantes.h"
+#include "circulo.h"
 
 // this is the game class that will handle the game loop, events, rendering, etc.
 // hecho como singleton
@@ -26,20 +27,14 @@ class Game {
     SDL_FRect sourceRect;
     SDL_FRect destRect;
 
-    int ancho, alto;
-    int m_currentFrame;
-    int m_currentRow;
+    int ancho, alto, m_currentFrame, m_currentRow;
     uint32_t color = 0xff056263;
 
-    Actor* m_actor; // actor que se va a mover
     circle* circulo;
+    circle* circulito;
 
-
-
-
-    // todos los actores del juego
     std::vector<ObjetoAbstractoBase *> m_players;
-
+    // singleton
     Game();
 public:
     static int timePreviousFrame;

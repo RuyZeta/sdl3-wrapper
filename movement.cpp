@@ -39,6 +39,7 @@ particula::particula(const float &x, const float &y, const float &masa) {
     m_position = Vec2r(x, y);
     m_acceleration = Vec2r(0, 0);
     m_velocity = Vec2r(0, 0);
+    m_sumForces = Vec2r(0, 0);
     m_masa = masa;
 }
 
@@ -53,5 +54,21 @@ Vec2r particula::getVelocity() const {
 
 Vec2r particula::getAcceleration() const {
     return m_acceleration;
+}
+
+void particula::addForces(const Vec2r &force) {
+    m_sumForces += force;
+}
+
+void particula::clearForces() {
+    m_sumForces = Vec2r(0, 0);
+}
+
+void particula::integrate(const float &dt) {
+    m_acceleration = (m_sumForces / m_masa);
+    // integra la aceleración con la velocidad  para encontrar la nueva posición
+    m_velocity += m_acceleration * dt;
+    m_position += m_velocity * dt;
+    clearForces(); // limpia las fuerzas acumuladas
 }
 

@@ -64,7 +64,7 @@ public:
         return *this;
     }
     Vec2r operator/(const float& scalar) const {
-        return Vec2r(m_x / scalar, m_y / scalar);
+        return Vec2r((m_x / scalar), (m_y / scalar));
     }
     Vec2r operator/=(const float& scalar) {
         m_x /= scalar;
@@ -87,6 +87,7 @@ class particula {
     Vec2r m_position;
     Vec2r m_velocity;
     Vec2r m_acceleration;
+    Vec2r m_sumForces;
     float m_masa;
 public:
     particula(const float& x, const float& y, const float& masa);
@@ -99,6 +100,11 @@ public:
     void setPosition(const Vec2r& p) {m_position = p;}
     void setVelocity(const Vec2r& v) {m_velocity = v;}
     void setAcceleration(const Vec2r& a) { m_acceleration = a; }
+
+    void addForces(const Vec2r& force);
+    void clearForces();
+
+    void integrate(const float& dt);
 
 
 };

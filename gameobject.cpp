@@ -55,43 +55,5 @@ void Actor::update() {
     m_position += m_unidad;
     Objeto_en_Juego::update();
 }
-/////////////////////////////////////////
-/// circle
-///
-circle::circle(const int &x, const int &y, const int &radio) : ObjetoAbstractoBase(), x(x), y(y), radio(radio) {
-    m_particula = new particula(x, y, radio);
-    vel = Vec2r(20, 20);
-    m_particula->setVelocity(vel);
-    m_particula->setAcceleration(Vec2r(2.0 * PIXELS_POR_METRO, 9.8 * PIXELS_POR_METRO )); // gravedad
-
-}
-
-void circle::draw() {
-    filledCircleColor(TheGame::getInstance()->getRenderer(), m_particula->getPosition().getX(),
-        m_particula->getPosition().getY(), radio, 0xff000000);
-}
-
-void circle::update() {
-    //m_particula->setVelocity(Vec2r(1, 1));
-
-    // integra la aceleración con la velocidad  para encontrar la nueva posición
-    m_particula->setVelocity(m_particula->getVelocity() += m_particula->getAcceleration() * TheGame::deltaTime);
-    m_particula->setPosition(m_particula->getPosition() += m_particula->getVelocity() * TheGame::deltaTime);
-
-    if (m_particula->getPosition().getX() - m_particula->getMasa()<= 0) {
-        m_particula->getPosition().setX(m_particula->getMasa());
-        m_particula->setVelocity(m_particula->getVelocity()* Vec2r(-0.9, 0.9));
-    } else if (m_particula->getPosition().getX() + m_particula->getMasa() >= TheGame::getInstance()->get_Ancho()) {
-        m_particula->getPosition().setX(m_particula->getMasa());
-        m_particula->setVelocity(m_particula->getVelocity()* Vec2r(-0.9, 0.9));
-    }
-    if (m_particula->getPosition().getY() - m_particula->getMasa() <= 0) {
-        m_particula->getPosition().setY(m_particula->getMasa());
-        m_particula->setVelocity(m_particula->getVelocity()* Vec2r(0.9, -0.9));
-    } else if (m_particula->getPosition().getY() + m_particula->getMasa() >= TheGame::getInstance()->get_Alto()) {
-        m_particula->getPosition().setY(m_particula->getMasa());
-        m_particula->setVelocity(m_particula->getVelocity()* Vec2r(0.9, -0.9));
-    }
-}
 
 
