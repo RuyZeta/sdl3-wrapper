@@ -91,12 +91,12 @@ class particula {
 public:
     particula(const float& x, const float& y, const float& masa);
     ~particula(){}
-    Vec2r getPosition() const { return m_position; }
-    Vec2r getVelocity() const { return m_velocity; }
-    Vec2r getAcceleration() const { return m_acceleration; }
+    Vec2r getPosition() ;
+    Vec2r getVelocity() const;
+    Vec2r getAcceleration() const;
     float getMasa() const { return m_masa; }
     void setMasa(const float& masa) { m_masa = masa; }
-    void setPosition(const Vec2r& p) {m_position = p;};
+    void setPosition(const Vec2r& p) {m_position = p;}
     void setVelocity(const Vec2r& v) {m_velocity = v;}
     void setAcceleration(const Vec2r& a) { m_acceleration = a; }
 

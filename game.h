@@ -11,6 +11,7 @@
 #include <vector>
 #include <SDL3_gfx/SDL3_gfxPrimitives.h>
 #include "movement.h"
+#include "constantes.h"
 
 // this is the game class that will handle the game loop, events, rendering, etc.
 // hecho como singleton
@@ -25,7 +26,7 @@ class Game {
     SDL_FRect sourceRect;
     SDL_FRect destRect;
 
-    float ancho, alto;
+    int ancho, alto;
     int m_currentFrame;
     int m_currentRow;
     uint32_t color = 0xff056263;
@@ -35,12 +36,14 @@ class Game {
 
 
 
+
     // todos los actores del juego
     std::vector<ObjetoAbstractoBase *> m_players;
 
     Game();
 public:
-
+    static int timePreviousFrame;
+    static float deltaTime;
     ~Game() {};
 
     static Game* s_pInstance;
@@ -61,6 +64,9 @@ public:
     void update();
     //
     void clean();
+    // getters
+    int get_Ancho() const { return ancho; }
+    int get_Alto() const { return alto; }
 
 };
 

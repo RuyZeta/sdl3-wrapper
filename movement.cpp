@@ -37,6 +37,21 @@ Vec2r Vec2r::perpendicular() const {
 
 particula::particula(const float &x, const float &y, const float &masa) {
     m_position = Vec2r(x, y);
+    m_acceleration = Vec2r(0, 0);
+    m_velocity = Vec2r(0, 0);
     m_masa = masa;
+}
+
+Vec2r particula::getPosition() {
+
+    return m_position;
+}
+
+Vec2r particula::getVelocity() const {
+    return m_velocity;
+}
+
+Vec2r particula::getAcceleration() const {
+    return m_acceleration;
 }
 
