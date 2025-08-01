@@ -6,8 +6,8 @@
 #define FORCE_H
 #include "movement.h"
 #include <cmath>
+#include <SDL3_gfx/SDL3_gfxPrimitives.h>
 
-#define M_PI 3.14159265358979323846
 
 class Force {
 
@@ -18,6 +18,6 @@ public:
     Vec2r GenerateDragForce(const particula& particle, const float& dragCoefficient);
 };
 
-
+typedef Force TheForce;
 
 #endif //FORCE_H

@@ -6,6 +6,7 @@
 #define CIRCULO_H
 
 #include "gameobject.h"
+#include "Force.h"
 
 class circle : public ObjetoAbstractoBase {
     Vec2r gravedad, peso;
@@ -25,6 +26,7 @@ public:
 class rectangulo : public ObjetoAbstractoBase {
     int x, y, width, height;
     Uint32 color;
+    Uint32 blue;
 public:
     rectangulo(const int& x, const int& y, const int& width, const int& height, const Uint32& color);
     virtual ~rectangulo() {};

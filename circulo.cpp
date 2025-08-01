@@ -4,6 +4,7 @@
 
 #include "circulo.h"
 #include "game.h"
+#include "Force.h"
 
 
 /////////////////////////////////////////
@@ -27,6 +28,11 @@ void circle::update() {
     m_particula->addForces(Vec2r(190, 0)); // viento
     m_particula->addForces(TheGame::getInstance()->get_PushForce()); // fuerza de empuje
     m_particula->integrate(TheGame::deltaTime);
+
+    if (m_particula->getPosition().getY() >= TheGame::getInstance()->get_Alto()/2) {
+        Vec2r dragFroce = TheForce::getInstance()->GenerateDragForce(*m_particula, 0.01);
+        m_particula->addForces(dragFroce); //TODO: arreglar esto la segunda pelota no funciona
+    }
 
     if ((m_particula->getPosition().getX() - radio) <= 0) {
         m_particula->setPosX(radio);
@@ -52,6 +58,7 @@ void circle::update() {
 
 rectangulo::rectangulo(const int &x, const int &y, const int &width, const int &height, const Uint32& color)
 : x(x), y(y), width(width), height(height), color(color) {
+    blue = 0;
 
 }
 
@@ -63,7 +70,9 @@ void rectangulo::draw() {
 }
 
 void rectangulo::update() {
-
+/*
+        blue+=1;
+        color &= ((blue%255) << 16);*/
 }
 
 void rectangulo::clean() {

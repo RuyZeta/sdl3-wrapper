@@ -59,7 +59,7 @@ bool Game::init(const char* name, int width, int height, int flags) {
 
     m_players.push_back(circulo);
     m_players.push_back(circulito);
-    m_players.push_back(new rectangulo(0, alto/2, ancho, alto/2,0x696effff ));
+    m_players.push_back(new rectangulo(0, alto/2, ancho, alto/2,0x696e00ff ));
 
     return true;
 }
