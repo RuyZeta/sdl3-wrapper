@@ -10,7 +10,7 @@
 /// circle
 ///
 circle::circle(const int &x, const int &y, const int &radio, const int& masa) : x(x), y(y), radio(radio) {
-    m_particula = new particula(x, y, masa);
+    m_particula = new particula(x, y, masa, radio);
     gravedad = Vec2r(0, 9.81f * PIXELS_POR_METRO); // gravedad en pixeles por metro
     peso = gravedad * m_particula->getMasa() ; // el peso se cancela con la masa F = m*a;
 }

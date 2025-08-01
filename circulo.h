@@ -13,7 +13,9 @@ class circle : public ObjetoAbstractoBase {
     int x, y, radio;
 public:
     circle(const int& x, const int& y, const int& radio, const int& masa );
-    virtual ~circle() {}
+    virtual ~circle() {
+        delete m_particula; // liberar memoria de la particula
+    }
     virtual void draw();
     virtual void update();
     virtual void clean() {};

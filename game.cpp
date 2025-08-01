@@ -18,6 +18,15 @@ Game::Game() : pWindow(nullptr), pRenderer(nullptr), bRunning(false),
     destRect.h = 0;
     pushForce = Vec2r(0, 0);
 }
+
+Game * Game::getInstance() { // función para obtener la instancia del juego
+    if (s_pInstance ==nullptr) {
+        s_pInstance = new Game();
+        return s_pInstance;
+    }
+    return s_pInstance;
+}
+
 // aquí se inicializa
 bool Game::init(const char* name, int width, int height, int flags) {
 
@@ -45,11 +54,11 @@ bool Game::init(const char* name, int width, int height, int flags) {
 
     //if (!TheTextureManager::getInstance()->load("../assets/ball5.png", "ball2", pRenderer))
 
-    circulo = new circle(850, 450, 10, 3);
-    circulito = new circle(1350, 450, 12, 4);
+    circulo = new circle(850, 450, 9, 9);
+    circulito = new circle(1350, 450, 15, 15);
 
-    //m_players.push_back(circulo);
-    //m_players.push_back(circulito);
+    m_players.push_back(circulo);
+    m_players.push_back(circulito);
 
 
     return true;
@@ -59,10 +68,10 @@ void Game::render() {
     SDL_SetRenderDrawColor(pRenderer, color>>16, color>>8, color, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(pRenderer);
 
-    /*for (std::vector<ObjetoAbstractoBase*>::iterator it = m_players.begin(); it != m_players.end(); ++it) {
+    for (std::vector<ObjetoAbstractoBase*>::iterator it = m_players.begin(); it != m_players.end(); ++it) {
         (*it)->draw();
-    }*/
-    circulo->draw();
+    }
+
 
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
@@ -77,15 +86,15 @@ void Game::update() {
         SDL_Delay(timeToWait);
 
     deltaTime = (SDL_GetTicks() - timePreviousFrame) / 1000.0f; // tiempo en segundos
-    if (deltaTime > 0.16f)  // si es mayor a 0.16 segundos, se limita a 0.16 para evitar problemas de velocidad
+    if (deltaTime > 0.016f)  // si es mayor a 0.16 segundos, se limita a 0.16 para evitar problemas de velocidad
         deltaTime = 0.016f; // 60 fps
 
     timePreviousFrame = SDL_GetTicks();
 
-    /*for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->update();
-    }*/
-    circulo->update();
+    }
+
 
 }
 
@@ -121,13 +130,17 @@ void Game::handeEvents() {
 }
 
 void Game::clean() {
-    delete circulo;
-    //delete circulito;
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
+        delete m_players[i]; // liberar memoria de los objetos
+    }
+    m_players.clear();
 
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
 }
+
+bool Game::isRunning() const {return bRunning;}
 
 Game* Game::s_pInstance = nullptr;
 int Game::timePreviousFrame = 0;

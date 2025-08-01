@@ -36,7 +36,7 @@ public:
     Vec2r operator/=(const float& scalar);
     Vec2r &operator=(const Vec2r &r);
 
-    void normalize();
+    Vec2r normalize();
     float largo_vector () const ;
     float magnitude () const;
     float dot(const Vec2r& other) const;
@@ -53,12 +53,14 @@ class particula {
     Vec2r m_sumForces;
     float m_masa;
     float m_invMasa; // inversa de la masa para evitar dividir por cero
+    float m_radio; // no se usa, no se necesita, pero se deja para futuras implementaciones
 public:
-    particula(const float& x, const float& y, const float& masa);
+    particula(const float& x, const float& y, const float& masa, const float& radio);
     ~particula(){}
     Vec2r getPosition() const;
     Vec2r getVelocity() const;
     Vec2r getAcceleration() const;
+    float getRadio() const { return m_radio; }
     float getMasa() const { return m_masa; }
     void setMasa(const float& masa) { m_masa = masa; }
     void setPosition(const Vec2r& p) {m_position = p;}

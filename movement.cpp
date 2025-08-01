@@ -61,10 +61,11 @@ Vec2r Vec2r::operator/=(const float &scalar) {
     return *this;
 }
 
-void Vec2r::normalize() {
+Vec2r Vec2r::normalize() {
     const float l = largo_vector();
     if (l > 0)
         (*this) *= 1 / l;
+    return *this;
 }
 // igual a magnitude
 float Vec2r::largo_vector() const {
@@ -90,12 +91,13 @@ Vec2r Vec2r::perpendicular() const {
 //////////////////////// particula
 ///
 
-particula::particula(const float &x, const float &y, const float &masa) {
+particula::particula(const float &x, const float &y, const float &masa, const float &radio) {
     m_position = Vec2r(x, y);
     m_acceleration = Vec2r(0, 0);
     m_velocity = Vec2r(0, 0);
     m_sumForces = Vec2r(0, 0);
     m_masa = masa;
+    m_radio = radio; // no se usa, no se necesita, pero se deja para futuras implementaciones
     if (m_masa != 0) {
         m_invMasa = 1.0f / m_masa; // inversa de la masa para evitar dividir por cero
     } else {

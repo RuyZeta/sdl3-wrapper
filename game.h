@@ -33,7 +33,6 @@ class Game {
     circle* circulo;
     circle* circulito;
     Vec2r pushForce;
-
     std::vector<ObjetoAbstractoBase *> m_players;
     // singleton
     Game();
@@ -42,18 +41,12 @@ public:
     static float deltaTime;
     ~Game() {};
 
-    static Game* s_pInstance;
-    static Game* getInstance() {
-        if (s_pInstance ==nullptr) {
-            s_pInstance = new Game();
-            return s_pInstance;
-        }
-        return s_pInstance;
-    }
+    //SINGLETON
+    static Game* s_pInstance; // la instancia del juego. Instanciada fuera de la clase (static).
+    static Game* getInstance(); // función para obtener la instancia del juego
+    //
     SDL_Renderer* getRenderer() const { return pRenderer; }
     bool init(const char *name, int width, int height, int flags);
-
-    bool isRunning() const {return bRunning;};
     // eventos del loop
     void handeEvents();
     void render();
@@ -61,10 +54,10 @@ public:
     //
     void clean();
     // getters
+    bool isRunning() const ;
     int get_Ancho() const { return ancho; }
     int get_Alto() const { return alto; }
     Vec2r get_PushForce() const { return pushForce; }
-
 };
 
 typedef Game TheGame;
