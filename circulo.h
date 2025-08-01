@@ -22,6 +22,16 @@ public:
 
 };
 
-
+class rectangulo : public ObjetoAbstractoBase {
+    int x, y, width, height;
+    Uint32 color;
+public:
+    rectangulo(const int& x, const int& y, const int& width, const int& height, const Uint32& color);
+    virtual ~rectangulo() {};
+    virtual void draw();
+    virtual void update();
+    virtual void clean();
+    void DrawFillRect() const ;
+};
 
 #endif //CIRCULO_H

@@ -45,3 +45,32 @@ void circle::update() {
         m_particula->setVelocity(m_particula->getVelocity() * Vec2r(0.8, -0.8));
     }
 }
+
+
+///////////////////////////////////////////////////
+///
+
+rectangulo::rectangulo(const int &x, const int &y, const int &width, const int &height, const Uint32& color)
+: x(x), y(y), width(width), height(height), color(color) {
+
+}
+
+
+void rectangulo::draw() {
+    boxColor(TheGame::getInstance()->getRenderer(), x + width, y,
+        x, y + height, color);
+
+}
+
+void rectangulo::update() {
+
+}
+
+void rectangulo::clean() {
+}
+
+void rectangulo::DrawFillRect() const {
+
+}
+
+

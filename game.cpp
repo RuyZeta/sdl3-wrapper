@@ -59,7 +59,7 @@ bool Game::init(const char* name, int width, int height, int flags) {
 
     m_players.push_back(circulo);
     m_players.push_back(circulito);
-
+    m_players.push_back(new rectangulo(0, alto/2, ancho, alto/2,0x696effff ));
 
     return true;
 }
@@ -67,12 +67,11 @@ bool Game::init(const char* name, int width, int height, int flags) {
 void Game::render() {
     SDL_SetRenderDrawColor(pRenderer, color>>16, color>>8, color, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(pRenderer);
-
+    ////////////////////////////////////////
     for (std::vector<ObjetoAbstractoBase*>::iterator it = m_players.begin(); it != m_players.end(); ++it) {
         (*it)->draw();
     }
-
-
+    ////////////////////////////////////////
     SDL_RenderPresent(pRenderer); // esto lo presenta al buffer de pantalla
 }
 
@@ -94,7 +93,6 @@ void Game::update() {
     for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < m_players.size(); ++i) {
         m_players[i]->update();
     }
-
 
 }
 

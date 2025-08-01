@@ -4,7 +4,9 @@
 
 #include "Force.h"
 
-Force * Force::getInstance() {
+Force::Force() {}
+
+Force* Force::getInstance() {
     if (sForce_instance == nullptr) {
         sForce_instance = new Force();
         return sForce_instance;
@@ -24,9 +26,9 @@ Vec2r Force::GenerateDragForce(const particula &particle, const float &dragCoeff
     Vec2r velocity = particle.getVelocity();
     float speedSquared = velocity.magnitude() * velocity.magnitude();
 
-    return    velocity.normalize() * (-0.5f * dragCoefficient * area * density * speedSquared)  ;
+    return velocity.normalize() * (-0.5f * dragCoefficient * area * density * speedSquared)  ;
 }
 
-Force * Force::sForce_instance = nullptr;
+Force* Force::sForce_instance = nullptr;
 
 typedef Force ForceInstance; // alias para usar Force como ForceInstance
