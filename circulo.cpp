@@ -14,7 +14,7 @@ circle::circle(const int &x, const int &y, const int &radio, const int& masa) : 
     m_particula = new particula(x, y, masa, radio);
     gravedad = Vec2r(0, 9.81f * PIXELS_POR_METRO); // gravedad en pixeles por metro
     peso = gravedad * m_particula->getMasa() ; // el peso se cancela con la masa F = m*a;
-    nFactor = 1;
+
 }
 
 void circle::draw() {
@@ -33,9 +33,27 @@ void circle::update() {
     }*/
 
 
-    m_particula->addForces(TheGame::getInstance()->get_PushForce()); // fuerza de empuje con el teclado
+    //m_particula->addForces(TheGame::getInstance()->get_PushForce()); // fuerza de empuje con el teclado
     //Vec2r frictionForce = TheForce::getInstance()->GenerateFrictionForce(*m_particula, 5.0f * PIXELS_POR_METRO); // fuerza de fricción
-    m_particula->addForces(TheForce::getInstance()->GenerateGravitationalForce(*m_particula, *m_otra_particula, 28.0f) * nFactor); //
+    //  *dynamic_cast<circle *>(*it)->getParticula() TIPO DE DYNAMIC CAST
+    float uno = -1.0f;  //TODO: encontrar una mejor forma
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < TheGame::m_players.size(); ++i) {
+        if (TheGame::m_players[i] == this)
+            break;
+        uno *= uno;
+    }
+
+    for (std::vector<ObjetoAbstractoBase *>::size_type i = 0; i < TheGame::m_players.size(); ++i) {
+        if (TheGame::m_players[i] != this) {
+            particula* otra_particula = dynamic_cast<circle *>(TheGame::m_players[i])->getParticula();
+            Vec2r gravForce = TheForce::getInstance()->GenerateGravitationalForce(*m_particula, *otra_particula, 4.5f);
+
+            m_particula->addForces(gravForce * uno ); // fuerza gravitacional entre las partículas
+            uno *= uno;
+        }
+    }
+
+    //m_particula->addForces(TheForce::getInstance()->GenerateGravitationalForce(*m_particula, *m_otra_particula, 1.0f) * nFactor); //
     m_particula->integrate(TheGame::deltaTime);
 
 

@@ -11,7 +11,7 @@
 class circle : public ObjetoAbstractoBase {
     Vec2r gravedad, peso, gravitationalForce;
 
-    int x, y, radio,nFactor;
+    int x, y, radio;
 public:
     particula* m_particula, *m_otra_particula;
     circle(const int& x, const int& y, const int& radio, const int& masa );
@@ -21,7 +21,7 @@ public:
     virtual void draw();
     virtual void update();
     virtual void clean() {};
-    void set_Negative_Factor(const int& i) { nFactor = i; }
+
     particula* getParticula();
     void add_particula(particula* p) {
         m_otra_particula = p;

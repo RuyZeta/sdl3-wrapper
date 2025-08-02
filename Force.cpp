@@ -43,7 +43,7 @@ Vec2r Force::GenerateGravitationalForce(const particula &a, const particula &b, 
     Vec2r distance =(b.getPosition() - a.getPosition());
     float distanceMagnitude = distance.largo_vector();
     Vec2r attractionDirection = distance.normalize();
-    float attractionMagnitude = G * (a.getMasa() * b.getMasa()) / distanceMagnitude;
+    float attractionMagnitude = G * (a.getMasa() * b.getMasa()) / (distanceMagnitude/PIXELS_POR_METRO);
     Vec2r attractionForce = attractionDirection * attractionMagnitude;
     return attractionForce;
 }

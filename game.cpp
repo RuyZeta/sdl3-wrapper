@@ -58,16 +58,14 @@ bool Game::init(const char* name, int width, int height, int flags) {
     circulito = new circle(850, 450, 9, 9);
     circulo = new circle(1350, 650, 15, 15);
     circle *pun = new circle(1500, 750, 12, 12);
-    circulo->set_Negative_Factor(-1); // para que se muevan en direcciones opuestas
-    pun->set_Negative_Factor(-1);
-    circulo->add_particula(circulito->getParticula());
-    circulito->add_particula(circulo->getParticula());
-    pun->add_particula(circulito->getParticula());
-
+    circle *cir2 = new circle(1500, 850, 6, 6);
+    circle *cir3 = new circle(300, 300, 20, 20);
 
     m_players.push_back(circulo);
     m_players.push_back(circulito);
     m_players.push_back(pun);
+    m_players.push_back(cir2);
+    m_players.push_back(cir3);
 
 
     return true;
