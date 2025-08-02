@@ -33,10 +33,11 @@ class Game {
     circle* circulo;
     circle* circulito;
     Vec2r pushForce;
-    std::vector<ObjetoAbstractoBase *> m_players;
+
     // singleton
     Game();
 public:
+    static std::vector<ObjetoAbstractoBase *> m_players;
     static int timePreviousFrame;
     static float deltaTime;
     ~Game() {};

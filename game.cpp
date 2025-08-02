@@ -3,6 +3,7 @@
 //
 
 #include "game.h"
+#include "Force.h"
 
 
 
@@ -54,12 +55,20 @@ bool Game::init(const char* name, int width, int height, int flags) {
 
     //if (!TheTextureManager::getInstance()->load("../assets/ball5.png", "ball2", pRenderer))
 
-    circulo = new circle(850, 450, 9, 9);
-    circulito = new circle(1350, 450, 15, 15);
+    circulito = new circle(850, 450, 9, 9);
+    circulo = new circle(1350, 650, 15, 15);
+    circle *pun = new circle(1500, 750, 12, 12);
+    circulo->set_Negative_Factor(-1); // para que se muevan en direcciones opuestas
+    pun->set_Negative_Factor(-1);
+    circulo->add_particula(circulito->getParticula());
+    circulito->add_particula(circulo->getParticula());
+    pun->add_particula(circulito->getParticula());
+
 
     m_players.push_back(circulo);
     m_players.push_back(circulito);
-    m_players.push_back(new rectangulo(0, alto/2, ancho, alto/2,0x696e00ff ));
+    m_players.push_back(pun);
+
 
     return true;
 }
@@ -78,7 +87,6 @@ void Game::render() {
 
 
 void Game::update() {
-
     // si va muy rápido para 60fps, se agrega una demora
     const int timeToWait = MILISEGUNDOS_POR_FRAME - (SDL_GetTicks() - timePreviousFrame);
     if (timeToWait > 0)
@@ -143,3 +151,4 @@ bool Game::isRunning() const {return bRunning;}
 Game* Game::s_pInstance = nullptr;
 int Game::timePreviousFrame = 0;
 float Game::deltaTime = 0.0f;
+std::vector<ObjetoAbstractoBase *> Game::m_players;

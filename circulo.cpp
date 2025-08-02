@@ -14,6 +14,7 @@ circle::circle(const int &x, const int &y, const int &radio, const int& masa) : 
     m_particula = new particula(x, y, masa, radio);
     gravedad = Vec2r(0, 9.81f * PIXELS_POR_METRO); // gravedad en pixeles por metro
     peso = gravedad * m_particula->getMasa() ; // el peso se cancela con la masa F = m*a;
+    nFactor = 1;
 }
 
 void circle::draw() {
@@ -24,16 +25,22 @@ void circle::draw() {
 void circle::update() {
 
     // integra la aceleración con la velocidad  para encontrar la nueva posición
-    m_particula->addForces(peso);
+    /*m_particula->addForces(peso);
     m_particula->addForces(Vec2r(190, 0)); // viento
-    m_particula->addForces(TheGame::getInstance()->get_PushForce()); // fuerza de empuje
+    if (m_particula->getPosition().getY() >= TheGame::getInstance()->get_Alto()/2) {
+        Vec2r dragFroce = TheForce::getInstance()->GenerateDragForce(*m_particula, 0.008f);
+        m_particula->addForces(dragFroce); //
+    }*/
+
+
+    m_particula->addForces(TheGame::getInstance()->get_PushForce()); // fuerza de empuje con el teclado
+    //Vec2r frictionForce = TheForce::getInstance()->GenerateFrictionForce(*m_particula, 5.0f * PIXELS_POR_METRO); // fuerza de fricción
+    m_particula->addForces(TheForce::getInstance()->GenerateGravitationalForce(*m_particula, *m_otra_particula, 28.0f) * nFactor); //
     m_particula->integrate(TheGame::deltaTime);
 
-    if (m_particula->getPosition().getY() >= TheGame::getInstance()->get_Alto()/2) {
-        Vec2r dragFroce = TheForce::getInstance()->GenerateDragForce(*m_particula, 0.01);
-        m_particula->addForces(dragFroce); //TODO: arreglar esto la segunda pelota no funciona
-    }
 
+    // colisiones con los bordes de la pantalla
+    // solo un truco que no tiene relación con lo demás, pero sirve para testear las funciones creadas
     if ((m_particula->getPosition().getX() - radio) <= 0) {
         m_particula->setPosX(radio);
         m_particula->setVelocity(m_particula->getVelocity() * Vec2r(-0.8, 0.8));
@@ -50,6 +57,11 @@ void circle::update() {
         m_particula->setPosY(TheGame::getInstance()->get_Alto() - radio);
         m_particula->setVelocity(m_particula->getVelocity() * Vec2r(0.8, -0.8));
     }
+}
+
+particula * circle::getParticula() {
+
+    return m_particula;
 }
 
 

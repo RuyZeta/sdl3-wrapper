@@ -9,10 +9,11 @@
 #include "Force.h"
 
 class circle : public ObjetoAbstractoBase {
-    Vec2r gravedad, peso;
-    particula* m_particula;
-    int x, y, radio;
+    Vec2r gravedad, peso, gravitationalForce;
+
+    int x, y, radio,nFactor;
 public:
+    particula* m_particula, *m_otra_particula;
     circle(const int& x, const int& y, const int& radio, const int& masa );
     virtual ~circle() {
         delete m_particula; // liberar memoria de la particula
@@ -20,6 +21,13 @@ public:
     virtual void draw();
     virtual void update();
     virtual void clean() {};
+    void set_Negative_Factor(const int& i) { nFactor = i; }
+    particula* getParticula();
+    void add_particula(particula* p) {
+        m_otra_particula = p;
+    }
+
+
 
 };
 
